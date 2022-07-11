@@ -1,10 +1,28 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
+import NavBar from "@/common/components/nav/NavBar";
+import { SessionProvider } from "next-auth/react";
+import { QueryClient, QueryClientProvider } from "react-query";
+import Head from "next/head";
+import HeadTags from "@/common/components/base/HeadTags";
 
-function ScamLog({ Component, pageProps }: AppProps) {
+const client = new QueryClient();
+
+function ScamLog({
+  Component,
+  pageProps: { session, ...pageProps },
+}: AppProps) {
   return (
     <>
-      <Component {...pageProps} />
+      <Head>
+        <HeadTags />
+      </Head>
+      <SessionProvider session={session}>
+        <QueryClientProvider client={client}>
+          <NavBar links={[]} />
+          <Component {...pageProps} />
+        </QueryClientProvider>
+      </SessionProvider>
     </>
   );
 }
