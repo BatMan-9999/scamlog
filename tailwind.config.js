@@ -8,5 +8,31 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [],
+  plugins: [require("daisyui")],
+  
+  daisyui: {
+    themes: [
+      {
+        mightypart: {
+          primary: "#4758e8",
+
+          secondary: "#2b368d",
+
+          accent: "#57F287",
+
+          neutral: "#2c3039",
+
+          "base-100": "#202025",
+
+          info: "#3ABFF8",
+
+          success: "#36D399",
+
+          warning: "#FBBD23",
+
+          error: "#F87272",
+        },
+      },
+    ],
+  },
 };
