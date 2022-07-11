@@ -5,8 +5,6 @@ import Image from "next/image";
 export default function NavBar({}: NavBarProps) {
   const session = useSession();
 
-  console.log(session);
-
   return (
     <nav className="navbar bg-base-100">
       <div className="flex-1">
