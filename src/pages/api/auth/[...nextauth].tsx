@@ -20,9 +20,10 @@ export default NextAuth({
       }
       const adminUser = await prisma.adminUser.findUnique({
         where: {
-          id: user.id,
+          userId: user.id,
         },
       });
+
       if (!adminUser) {
         session.admin = false;
         return session as Session & AdminNotFoundSessionAddition;
