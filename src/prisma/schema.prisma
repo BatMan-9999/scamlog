@@ -23,6 +23,7 @@ model ScamServer {
   isActive        Boolean  @default(true)
   createdAt       DateTime @default(now())
   updatedAt       DateTime @default(now())
+  evidenceLinks   String[]
 }
 
 model ServerReport {
@@ -33,6 +34,7 @@ model ServerReport {
   adminIds        String[]
   inviteCodes     String[]
   name            String
+  evidenceLinks   String[]
   createdAt       DateTime @default(now())
 }
 
