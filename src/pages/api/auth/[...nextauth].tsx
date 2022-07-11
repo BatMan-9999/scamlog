@@ -2,6 +2,7 @@ import NextAuth, { Session } from "next-auth";
 import DiscordProvier from "next-auth/providers/discord";
 import { prisma } from "@/common/utilities/prisma";
 import { AdminUser } from "@prisma/client";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
 export default NextAuth({
   providers: [
@@ -30,6 +31,7 @@ export default NextAuth({
       return session as Session & AdminSessionAddition;
     },
   },
+  adapter: PrismaAdapter(prisma),
 });
 
 interface AdminSessionAddition {
