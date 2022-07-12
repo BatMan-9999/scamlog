@@ -15,16 +15,18 @@ function ScamLog({
 }: AppProps) {
   return (
     <>
-      <SessionProvider session={session}>
-        <QueryClientProvider client={client}>
-          <Head>
-            <HeadTags />
-          </Head>
-          <NavBar links={[]} />
-          <Component {...pageProps} />
-          <ReactQueryDevtools />
-        </QueryClientProvider>
-      </SessionProvider>
+      <div className="scrollbar-thumb-gray-900 scrollbar-track-gray-100">
+        <SessionProvider session={session}>
+          <QueryClientProvider client={client}>
+            <Head>
+              <HeadTags />
+            </Head>
+            <NavBar links={[]} />
+            <Component {...pageProps} />
+            <ReactQueryDevtools />
+          </QueryClientProvider>
+        </SessionProvider>
+      </div>
     </>
   );
 }
