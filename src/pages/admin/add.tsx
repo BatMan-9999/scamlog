@@ -21,10 +21,10 @@ export default function Add() {
 
   const verificationTooltips: Record<GuildVerificationLevel, string> = {
     "0": "Unrestricted",
-    "1": "Must have a verified email on their Discord account.",
-    "2": "Must be registered on Discord for longer than 5 minutes.",
-    "3": "Must be a member of the server for longer than 10 minutes.",
-    "4": "Must have a verified phone on their Discord account.",
+    "1": "Members Must have a verified email on their Discord account.",
+    "2": "Members Must be registered on Discord for longer than 5 minutes.",
+    "3": "Members Must be a member of the server for longer than 10 minutes.",
+    "4": "Members Must have a verified phone on their Discord account.",
   };
 
   const query = useQuery(
