@@ -13,35 +13,42 @@ datasource db {
 }
 
 model ScamServer {
-  id                String   @id @default(auto()) @map("_id") @db.ObjectId
-  createdByUser     User?    @relation(fields: [createdByUserId], references: [id])
-  createdByUserId   String   @db.ObjectId
-  serverId          String   @unique
+  id                String     @id @default(auto()) @map("_id") @db.ObjectId
+  createdByUser     User?      @relation(fields: [createdByUserId], references: [id])
+  createdByUserId   String     @db.ObjectId
+  serverId          String     @unique
   adminIds          String[]
   inviteCodes       String[]
   name              String
-  isActive          Boolean  @default(true)
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @default(now())
+  isActive          Boolean    @default(true)
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @default(now())
   evidenceLinks     String[]
-  bannerHash        String?  @unique
-  nsfw              Boolean  @default(false)
+  bannerHash        String?    @unique
+  nsfw              Boolean    @default(false)
   // 0, 1, 2, 3, 4
   // Use ts enum
   // https://discord.com/developers/docs/resources/guild#guild-object-verification-level
   verificationLevel Int
+  serverType        ServerType @default(OTHER)
+  description       String?
+  longReport        String? // markdown
+  tags              String[]
+  memberCount       Int
 }
 
 model ServerReport {
-  id              String   @id @default(auto()) @map("_id") @db.ObjectId
-  createdByUser   User?    @relation(fields: [createdByUserId], references: [id])
-  createdByUserId String   @db.ObjectId
+  id              String     @id @default(auto()) @map("_id") @db.ObjectId
+  createdByUser   User?      @relation(fields: [createdByUserId], references: [id])
+  createdByUserId String     @db.ObjectId
   serverId        String
   adminIds        String[]
   inviteCodes     String[]
   name            String
   evidenceLinks   String[]
-  createdAt       DateTime @default(now())
+  createdAt       DateTime   @default(now())
+  serverType      ServerType @default(OTHER)
+  description     String?
 }
 
 model FeaturedServer {
