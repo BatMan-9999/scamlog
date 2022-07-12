@@ -13,6 +13,7 @@ export default function ScamServerCard({
   iconHash,
   verificationLevel,
   description,
+  nsfw
 }: ScamServer) {
   let size: string;
   if (memberCount < 500) size = "Tiny";
@@ -81,16 +82,26 @@ export default function ScamServerCard({
     //   </div>
     // </div>
 
-    <div className="card card-compact w-80 md:w-96 rounded-md bg-base-300 block">
+    <div className="card card-compact w-80 md:w-96 rounded-md bg-base-300 flex">
       <figure className="relative">
         {bannerHash ? (
-          <Image
-            src={`https://cdn.discordapp.com/banners/${serverId}/${bannerHash}?size=2048`}
-            alt="Server banner"
-            layout="fixed"
-            width={500}
-            height={170}
-          />
+          nsfw ? (
+            <Image
+              src={`/static/img/nsfw.png`}
+              alt="NSFW Server banner (censored)"
+              layout="fixed"
+              width={500}
+              height={170}
+            />
+          ) : (
+            <Image
+              src={`https://cdn.discordapp.com/banners/${serverId}/${bannerHash}?size=2048`}
+              alt="Server banner"
+              layout="fixed"
+              width={500}
+              height={170}
+            />
+          )
         ) : (
           <Image
             src={`/static/img/missingno.png`}
@@ -146,6 +157,9 @@ export default function ScamServerCard({
             <span className="">{description ?? "No description set"}</span>
           </div>
         </div>
+      </div>
+      <div className="card-actions bg-primary hover:bg-secondary transition-colors text-center cursor-pointer py-2 flex justify-center self-end w-full">
+          <span className="font-semibold">View Report</span>
       </div>
     </div>
   );
