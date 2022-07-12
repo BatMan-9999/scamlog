@@ -8,7 +8,9 @@ export default function NavBar({}: NavBarProps) {
   return (
     <nav className="navbar bg-base-100">
       <div className="flex-1">
-        <a className="btn btn-ghost normal-case text-xl">Scam Log</a>
+        <Link href={"/"}>
+          <span className="btn btn-ghost normal-case text-xl">Scam Log</span>
+        </Link>
       </div>
       <div className="flex-none">
         {session.status !== "authenticated" ? (
