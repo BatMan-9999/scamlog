@@ -111,6 +111,7 @@ export default async function handler(
       nsfw: req.body.nsfw,
       tags: req.body.tags ?? [],
       serverType: req.body.serverType,
+      iconHash: req.body.iconHash,
     },
   });
 
