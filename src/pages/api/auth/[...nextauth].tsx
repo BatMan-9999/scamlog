@@ -1,10 +1,10 @@
-import NextAuth, { Session } from "next-auth";
+import NextAuth, { NextAuthOptions, Session } from "next-auth";
 import DiscordProvier from "next-auth/providers/discord";
 import { prisma } from "@/common/utilities/prisma";
 import { AdminUser } from "@prisma/client";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
-export default NextAuth({
+export const opts: NextAuthOptions = {
   providers: [
     DiscordProvier({
       clientId: process.env.DISCORD_CLIENT_ID!,
@@ -33,7 +33,9 @@ export default NextAuth({
     },
   },
   adapter: PrismaAdapter(prisma),
-});
+};
+
+export default NextAuth(opts);
 
 interface AdminSessionAddition {
   admin: AdminUser;
