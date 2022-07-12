@@ -1,8 +1,10 @@
 import { StandardAPIResponse } from "@/common/types/api/StandardAPIResponse";
+import checkPerms from "@/modules/auth/permissions/functions/checkPerms";
 import { ScamServer } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 import { unstable_getServerSession } from "next-auth";
 import { opts } from "../../auth/[...nextauth]";
+import { prisma } from "@/common/utilities/prisma";
 
 export default async function handler(
   req: NextApiRequest,
@@ -14,7 +16,7 @@ export default async function handler(
       data: null,
     });
 
-    console.log(req.body)
+  console.log(req.body);
 
   const session = await unstable_getServerSession(req, res, opts);
 
@@ -27,6 +29,12 @@ export default async function handler(
   if (!session.admin)
     return res.status(403).json({
       message: "Forbidden - you are not admin",
+      data: null,
+    });
+
+  if (!checkPerms(["MANAGE_ALL_SERVERS", "MANAGE_SERVERS"], session))
+    return res.status(403).json({
+      message: "Insufficient permissions",
       data: null,
     });
 
@@ -55,7 +63,10 @@ export default async function handler(
       data: null,
     });
 
-  if (req.body.verificationLevel === null || req.body.verificationLevel === undefined)
+  if (
+    req.body.verificationLevel === null ||
+    req.body.verificationLevel === undefined
+  )
     return res.status(400).json({
       message: "Missing verificationLevel",
       data: null,
