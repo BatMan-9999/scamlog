@@ -29,7 +29,7 @@ model ScamServer {
   // 0, 1, 2, 3, 4
   // Use ts enum
   // https://discord.com/developers/docs/resources/guild#guild-object-verification-level
-  verificationLevel Int 
+  verificationLevel Int
 }
 
 model ServerReport {
@@ -115,9 +115,14 @@ model AdminUser {
   createdAt   DateTime        @default(now())
   updatedAt   DateTime        @default(now())
   permissions UserPermissions @default(READ)
+  roles       Roles[]         @default([MEMBER])
 }
 
 // ENUMS \\
+enum Roles {
+  MEMBER
+}
+
 enum UserPermissions {
   READ
   WRITE // Includes update privledges
