@@ -24,7 +24,8 @@ model ScamServer {
   createdAt         DateTime   @default(now())
   updatedAt         DateTime   @default(now())
   evidenceLinks     String[]
-  bannerHash        String?    @unique
+  bannerHash        String?
+  iconHash          String?
   nsfw              Boolean    @default(false)
   // 0, 1, 2, 3, 4
   // Use ts enum
