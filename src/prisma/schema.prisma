@@ -131,6 +131,7 @@ enum Roles {
 }
 
 enum UserPermissions {
+  // ORDERED from low to high
   READ
   WRITE // Includes update privledges
   // If the createdBy field is blank, assume created by SYSTEM
