@@ -7,9 +7,12 @@ module.exports = {
   ],
   theme: {
     extend: {},
+    fontFamily: {
+      sans: ["Roboto", "Arial"],
+    },
   },
-  plugins: [require("daisyui")],
-  
+  plugins: [require("daisyui"), require("tailwind-scrollbar")],
+
   daisyui: {
     themes: [
       {
