@@ -20,6 +20,7 @@ function ScamLog({
           <QueryClientProvider client={client}>
             <Head>
               <HeadTags />
+              <title>Scam Log</title>
             </Head>
             <NavBar links={[]} />
             <Component {...pageProps} />

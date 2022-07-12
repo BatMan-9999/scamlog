@@ -122,7 +122,7 @@ model AdminUser {
   discordId   String          @unique
   createdAt   DateTime        @default(now())
   updatedAt   DateTime        @default(now())
-  permissions UserPermissions @default(READ)
+  permissions UserPermissions[] @default([MANAGE_SERVERS])
   roles       Roles[]         @default([MEMBER])
 }
 
@@ -132,13 +132,12 @@ enum Roles {
 }
 
 enum UserPermissions {
-  // ORDERED from low to high
-  READ
-  WRITE // Includes update privledges
-  // If the createdBy field is blank, assume created by SYSTEM
-  // Only system can delete when created by SYSTEM
-  // Users can always delete their own
-  DELETE // Remove other people's db submissions
+  MANAGE_REPORTS // Approve, delete, update reports
+  MANAGE_SERVERS // Add, update & delete servers in the db (their own only)
+  MANAGE_ALL_SERVERS // Add, update & delete servers in the db (all)
+  MODERATE_MEMBERS // Ban & unban users
+  ADMIN // Add other admins and manage user permissions
+  ROOT // Has all permissions
 }
 
 enum ServerType {
