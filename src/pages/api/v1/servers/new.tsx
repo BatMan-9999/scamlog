@@ -14,6 +14,8 @@ export default async function handler(
       data: null,
     });
 
+    console.log(req.body)
+
   const session = await unstable_getServerSession(req, res, opts);
 
   if (!session)
@@ -53,7 +55,7 @@ export default async function handler(
       data: null,
     });
 
-  if (!req.body.verificationLevel)
+  if (req.body.verificationLevel === null || req.body.verificationLevel === undefined)
     return res.status(400).json({
       message: "Missing verificationLevel",
       data: null,
