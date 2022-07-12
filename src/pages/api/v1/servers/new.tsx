@@ -16,8 +16,6 @@ export default async function handler(
       data: null,
     });
 
-  console.log(req.body);
-
   const session = await unstable_getServerSession(req, res, opts);
 
   if (!session)
@@ -32,7 +30,7 @@ export default async function handler(
       data: null,
     });
 
-  if (!checkPerms(["MANAGE_ALL_SERVERS", "MANAGE_SERVERS"], session))
+  if (!checkPerms(["MANAGE_ALL_SERVERS", "MANAGE_SERVERS"], { data: session }))
     return res.status(403).json({
       message: "Insufficient permissions",
       data: null,

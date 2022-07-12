@@ -1,5 +1,6 @@
 import { UserPermissions } from "@prisma/client";
 import { Session } from "next-auth";
+import { SessionContextValue, useSession } from "next-auth/react";
 
 /**
  * Check if a user has certain perms
@@ -8,11 +9,11 @@ import { Session } from "next-auth";
  */
 export default function checkPerms(
   perms: UserPermissions[],
-  session: Session
+  session: { data: Session }
 ): boolean {
-  if (!session.admin) return false;
-  if (session.admin.permissions.includes("ROOT")) return true;
-  for (const permission of session.admin.permissions) {
+  if (!session.data.admin) return false;
+  if (session.data.admin.permissions.includes("ROOT")) return true;
+  for (const permission of session.data.admin.permissions) {
     if (perms.includes(permission)) return true;
   }
   return false;

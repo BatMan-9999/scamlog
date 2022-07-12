@@ -1,3 +1,4 @@
+import checkPerms from "@/modules/auth/permissions/functions/checkPerms";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import React, { ReactNode } from "react";
@@ -44,18 +45,34 @@ export default function DrawerLayout({ children }: React.PropsWithChildren) {
 
         <div className="bg-base-200 pt-4 px-2">
           <DashboardButton name="" text="Overview" icon={<Monitor />} />
+          {checkPerms(
+            ["MANAGE_SERVERS", "MANAGE_ALL_SERVERS"],
+            session as any
+          ) ? (
+            <>
+              <span className="ml-1 mt-2 uppercase text-xs text-base-content font-bold">
+                Servers
+              </span>
+              <DashboardButton
+                name="add"
+                text="Add Server"
+                icon={<FilePlus />}
+              />
+            </>
+          ) : null}
+          {checkPerms(["MANAGE_REPORTS"], session as any) ? (
+            <DashboardButton name="reports" text="Reports" icon={<Flag />} />
+          ) : null}
 
-          <span className="ml-1 mt-2 uppercase text-xs text-base-content font-bold">
-            Servers
-          </span>
-          <DashboardButton name="add" text="Add Server" icon={<FilePlus />} />
-          <DashboardButton name="reports" text="Reports" icon={<Flag />} />
-
-          <span className="ml-1 mt-2 uppercase text-xs text-base-content font-bold">
-            Users
-          </span>
-          <DashboardButton name="users" text="Users" icon={<Users />} />
-          <DashboardButton name="bans" text="Bans" icon={<Slash />} />
+          {checkPerms(["MODERATE_MEMBERS", "ADMIN"], session as any) ? (
+            <>
+              <span className="ml-1 mt-2 uppercase text-xs text-base-content font-bold">
+                Users
+              </span>
+              <DashboardButton name="users" text="Users" icon={<Users />} />
+              <DashboardButton name="bans" text="Bans" icon={<Slash />} />
+            </>
+          ) : null}
         </div>
       </div>
     </div>
