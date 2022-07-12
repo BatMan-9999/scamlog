@@ -44,11 +44,13 @@ export default function NavBar({}: NavBarProps) {
               {session.data.admin ? (
                 <li>
                   {/* Link to admin dashboard if user is in admin table (collection) */}
-                  <a href="/admin">Admin Dashboard</a>
+                  <Link href="/admin">Admin Dashboard</Link>
                 </li>
               ) : null}
               <li>
-                <span onClick={() => signOut()}>Logout</span>
+                <span onClick={() => signOut({
+                  callbackUrl: "/"
+                })}>Logout</span>
               </li>
             </ul>
           </div>
