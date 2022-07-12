@@ -6,7 +6,16 @@ module.exports = {
     "./src/common/**/*.{js,jsx,md,mdx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      keyframes: {
+        shake: {
+
+        },
+      },
+      animation: {
+        shake: "shake 0.5 infinite",
+      }
+    },
     fontFamily: {
       sans: ["Roboto", "Arial"],
     },
