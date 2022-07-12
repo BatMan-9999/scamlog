@@ -13,7 +13,7 @@ export default function ScamServerCard({
   iconHash,
   verificationLevel,
   description,
-  nsfw
+  nsfw,
 }: ScamServer) {
   let size: string;
   if (memberCount < 500) size = "Tiny";
@@ -153,13 +153,15 @@ export default function ScamServerCard({
             </Tooltip>
           </div>
           <div>
-            <span className="block text-primary">Community Description</span>
+            <span className="block text-primary">Server Description</span>
             <span className="">{description ?? "No description set"}</span>
           </div>
         </div>
       </div>
       <div className="card-actions bg-primary hover:bg-secondary transition-colors text-center cursor-pointer py-2 flex justify-center self-end w-full">
-          <span className="font-semibold">View Report</span>
+        <span className="font-semibold">
+          View Report {nsfw ? <span className="badge badge-warning ml-1">NSFW</span> : null}
+        </span>
       </div>
     </div>
   );
