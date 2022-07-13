@@ -8,19 +8,21 @@ module.exports = {
   theme: {
     extend: {
       keyframes: {
-        shake: {
-
-        },
+        shake: {},
       },
       animation: {
         shake: "shake 0.5 infinite",
-      }
+      },
     },
     fontFamily: {
       sans: ["Roboto", "Arial"],
     },
   },
-  plugins: [require("daisyui"), require("tailwind-scrollbar")],
+  plugins: [
+    require("@tailwindcss/typography"),
+    require("daisyui"),
+    require("tailwind-scrollbar"),
+  ],
 
   daisyui: {
     themes: [
