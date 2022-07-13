@@ -13,6 +13,9 @@ module.exports = {
       animation: {
         shake: "shake 0.5 infinite",
       },
+      colors: {
+        "base-darker": "#18141c",
+      },
     },
     fontFamily: {
       sans: ["Roboto", "Arial"],
