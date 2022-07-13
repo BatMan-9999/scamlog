@@ -7,5 +7,6 @@ declare module "next-auth" {
    */
   type Session = DefaultSession & {
     admin: false | AdminUser;
+    id?: string;
   };
 }

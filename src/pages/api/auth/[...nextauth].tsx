@@ -24,6 +24,8 @@ export const opts: NextAuthOptions = {
         },
       });
 
+      session.id = user.id;
+
       if (!adminUser) {
         session.admin = false;
         return session as Session & AdminNotFoundSessionAddition;
