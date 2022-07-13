@@ -1,13 +1,14 @@
 import useDebounce from "@/common/hooks/useDebounce";
 import DrawerLayout from "@/modules/dash/components/DrawerLayout";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMutation, useQuery } from "react-query";
 import { APIInvite, GuildVerificationLevel } from "discord-api-types/v10";
 import Image from "next/image";
 import { Tooltip } from "@nextui-org/react";
 import { Prisma, ServerType } from "@prisma/client";
 import { Plus } from "react-feather";
+import { toast } from "react-toastify";
 
 export default function Add() {
   const [invite, setInvite] = useState("");
@@ -17,6 +18,7 @@ export default function Add() {
   const [serverType, setServerType] =
     useState<Prisma.ScamServerCreateInput["serverType"]>("QR");
   const [nsfw, setNSFW] = useState(false);
+  const [isDuplicated, setIsDuplicated] = useState(false);
   const debouncedInvite = useDebounce(invite, 800);
 
   const verificationTooltips: Record<GuildVerificationLevel, string> = {
@@ -41,6 +43,26 @@ export default function Add() {
       refetchOnMount: true,
     }
   );
+
+  const checkQuery = useQuery(["serverId", query.data?.guild?.id], () =>
+    fetch(`/api/v1/servers?serverId=${query.data?.guild?.id}`).then((res) =>
+      res.json()
+    )
+  );
+
+  useEffect(() => {
+    if (checkQuery.data?.data?.servers?.length) {
+      return setIsDuplicated(true);
+    }
+    return setIsDuplicated(false);
+  }, [checkQuery.data?.data?.servers]);
+
+  useEffect(() => {
+    if (isDuplicated)
+      toast(`Server is already in database`, {
+        type: "error",
+      });
+  }, [isDuplicated]);
 
   return (
     <DrawerLayout>
@@ -159,7 +181,7 @@ export default function Add() {
                     iconHash: query.data?.guild?.icon,
                   };
 
-                  await fetch(`/api/v1/servers/new`, {
+                  const res = await fetch(`/api/v1/servers/new`, {
                     method: "POST",
                     body: JSON.stringify(data),
                     credentials: "include",
@@ -167,6 +189,11 @@ export default function Add() {
                       "Content-Type": "application/json",
                     },
                   });
+
+                  if (res.status === 409)
+                    toast("Server already exists", {
+                      type: "error",
+                    });
 
                   setInvite("");
                   setLongReport("");

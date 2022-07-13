@@ -6,6 +6,8 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import Head from "next/head";
 import HeadTags from "@/common/components/base/HeadTags";
 import { ReactQueryDevtools } from "react-query/devtools";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 const client = new QueryClient();
 
@@ -24,6 +26,7 @@ function ScamLog({
             </Head>
             <NavBar links={[]} />
             <Component {...pageProps} />
+            <ToastContainer theme="dark" />
             <ReactQueryDevtools />
           </QueryClientProvider>
         </SessionProvider>

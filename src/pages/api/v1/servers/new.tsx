@@ -99,6 +99,18 @@ export default async function handler(
     });
   await prisma?.$connect();
 
+  const dupe = await prisma.scamServer.findFirst({
+    where: {
+      serverId: req.body.serverId,
+    },
+  });
+
+  if (dupe)
+    return res.status(409).json({
+      message: "Server ID already exists",
+      data: null,
+    });
+
   const returned = await prisma?.scamServer.create({
     data: {
       createdByUser: {
