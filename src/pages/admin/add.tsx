@@ -9,6 +9,7 @@ import { Tooltip } from "@nextui-org/react";
 import { Prisma, ServerType } from "@prisma/client";
 import { Plus } from "react-feather";
 import { toast } from "react-toastify";
+import verificationTooltips from "@/modules/translation/object/VerificationTooltips";
 
 export default function Add() {
   const [invite, setInvite] = useState("");
@@ -20,14 +21,6 @@ export default function Add() {
   const [nsfw, setNSFW] = useState(false);
   const [isDuplicated, setIsDuplicated] = useState(false);
   const debouncedInvite = useDebounce(invite, 800);
-
-  const verificationTooltips: Record<GuildVerificationLevel, string> = {
-    "0": "Unrestricted",
-    "1": "Members must have a verified email on their Discord account.",
-    "2": "Members must be registered on Discord for longer than 5 minutes.",
-    "3": "Members must be a member of the server for longer than 10 minutes.",
-    "4": "Members must have a verified phone on their Discord account.",
-  };
 
   const query = useQuery(
     ["discordserver", debouncedInvite],
