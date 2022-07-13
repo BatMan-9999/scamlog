@@ -2,7 +2,7 @@ import checkPerms from "@/modules/auth/permissions/functions/checkPerms";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import React, { ReactNode } from "react";
-import { FilePlus, Flag, Monitor, Slash, Users } from "react-feather";
+import { Edit, FilePlus, Flag, Monitor, Slash, Users } from "react-feather";
 
 export default function DrawerLayout({ children }: React.PropsWithChildren) {
   const session = useSession();
@@ -57,6 +57,11 @@ export default function DrawerLayout({ children }: React.PropsWithChildren) {
                 name="add"
                 text="Add Server"
                 icon={<FilePlus />}
+              />
+              <DashboardButton
+                name="manage"
+                text="Manage Servers"
+                icon={<Edit />}
               />
             </>
           ) : null}
