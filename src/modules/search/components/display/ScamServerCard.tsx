@@ -179,16 +179,16 @@ export default function ScamServerCard({
           </div>
         </div>
       </div>
-      <div className="card-actions bg-primary hover:bg-secondary transition-colors text-center cursor-pointer py-2 flex justify-center self-end w-full">
-        <Link href={`/servers/${id}`}>
+      <Link href={`/servers/${id}`}>
+        <div className="card-actions bg-primary hover:bg-secondary transition-colors text-center cursor-pointer py-2 flex justify-center self-end w-full">
           <span className="font-semibold">
             View Report{" "}
             {nsfw ? (
               <span className="badge badge-warning ml-1">NSFW</span>
             ) : null}
           </span>
-        </Link>
-      </div>
+        </div>
+      </Link>
     </div>
   );
 }
