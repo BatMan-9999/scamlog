@@ -77,19 +77,20 @@ model FeaturedServer {
 }
 
 model User {
-  id            String         @id @default(auto()) @map("_id") @db.ObjectId
-  name          String
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @default(now())
-  ScamServer    ScamServer[]
-  Account       Account[]
-  Session       Session[]
-  email         String?        @unique
-  emailVerified DateTime?
-  image         String?
-  ServerReport  ServerReport[]
-  AdminUser     AdminUser?
-  BannedUser    BannedUser[]
+  id             String         @id @default(auto()) @map("_id") @db.ObjectId
+  name           String
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @default(now())
+  ScamServer     ScamServer[]
+  Account        Account[]
+  Session        Session[]
+  email          String?        @unique
+  emailVerified  DateTime?
+  image          String?
+  ServerReport   ServerReport[]
+  AdminUser      AdminUser?
+  BannedUser     BannedUser[]
+  reportCoolDown DateTime?
 }
 
 // Next-Auth
