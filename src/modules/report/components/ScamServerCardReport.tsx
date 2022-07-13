@@ -47,23 +47,13 @@ export default function ScamServerCard({
     <div className="card card-compact w-72 md:w-80 xl:w-96 rounded-md bg-base-300 flex">
       <figure className="relative">
         {bannerHash ? (
-          nsfw ? (
-            <Image
-              src={`/static/img/nsfw.png`}
-              alt="NSFW Server banner (censored)"
-              layout="fixed"
-              width={500}
-              height={170}
-            />
-          ) : (
-            <Image
-              src={`https://cdn.discordapp.com/banners/${serverId}/${bannerHash}?size=2048`}
-              alt="Server banner"
-              layout="fixed"
-              width={500}
-              height={170}
-            />
-          )
+          <Image
+            src={`https://cdn.discordapp.com/banners/${serverId}/${bannerHash}?size=2048`}
+            alt="Server banner"
+            layout="fixed"
+            width={500}
+            height={170}
+          />
         ) : (
           <Image
             src={`/static/img/missingno.png`}
