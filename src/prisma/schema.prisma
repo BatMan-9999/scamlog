@@ -36,20 +36,34 @@ model ScamServer {
   longReport        String? // markdown
   tags              String[]
   memberCount       Int
+  approvedBy        AdminUser? @relation(fields: [adminUserId], references: [id])
+  adminUserId       String?    @db.ObjectId
 }
 
 model ServerReport {
-  id              String     @id @default(auto()) @map("_id") @db.ObjectId
-  createdByUser   User?      @relation(fields: [createdByUserId], references: [id])
-  createdByUserId String     @db.ObjectId
-  serverId        String
-  adminIds        String[]
-  inviteCodes     String[]
-  name            String
-  evidenceLinks   String[]
-  createdAt       DateTime   @default(now())
-  serverType      ServerType @default(OTHER)
-  description     String?
+  id                String     @id @default(auto()) @map("_id") @db.ObjectId
+  createdByUser     User?      @relation(fields: [createdByUserId], references: [id])
+  createdByUserId   String     @db.ObjectId
+  serverId          String     @unique
+  adminIds          String[]
+  inviteCodes       String[]
+  name              String
+  isActive          Boolean    @default(true)
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @default(now())
+  evidenceLinks     String[]
+  bannerHash        String?
+  iconHash          String?
+  nsfw              Boolean    @default(false)
+  // 0, 1, 2, 3, 4
+  // Use ts enum
+  // https://discord.com/developers/docs/resources/guild#guild-object-verification-level
+  verificationLevel Int
+  serverType        ServerType @default(OTHER)
+  description       String?
+  longReport        String? // markdown
+  tags              String[]
+  memberCount       Int
 }
 
 model FeaturedServer {
@@ -125,6 +139,7 @@ model AdminUser {
   permissions UserPermissions[] @default([MANAGE_SERVERS])
   roles       Roles[]           @default([MEMBER])
   BannedUser  BannedUser[]
+  ScamServer  ScamServer[]
 }
 
 // Banned users cannot add new reports. AdminUser's can't be banned
