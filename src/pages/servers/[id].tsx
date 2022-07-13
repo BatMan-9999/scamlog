@@ -1,5 +1,5 @@
 import ScamServerCardReport from "@/modules/report/components/ScamServerCardReport";
-import { GetServerSideProps } from "next";
+import { GetServerSideProps, GetStaticPaths, GetStaticProps } from "next";
 import { useRouter } from "next/router";
 import { useQuery } from "react-query";
 import { prisma } from "@/common/utilities/prisma";
@@ -47,26 +47,12 @@ export default function ID({
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  if (Array.isArray(query.id))
-    return {
-      props: {
-        data: false,
-      },
-    };
-
-  if (query.id?.length !== 24)
-    return {
-      props: {
-        data: false,
-      },
-    };
-
+export const getStaticProps: GetStaticProps = async (context) => {
   await prisma.$connect();
 
   const prismaQuery = await prisma.scamServer.findFirst({
     where: {
-      id: query.id,
+      id: context.params?.id as string,
     },
     include: {
       createdByUser: true,
@@ -85,5 +71,27 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
       data: JSON.parse(JSON.stringify(prismaQuery)),
       text: await serialize(prismaQuery.longReport ?? ""),
     },
+    revalidate: 10,
+  };
+};
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  await prisma.$connect();
+
+  const prismaQuery = await prisma.scamServer.findMany({
+    select: {
+      id: true,
+    },
+  });
+
+  const paths = prismaQuery.map((server) => ({
+    params: {
+      id: server.id,
+    },
+  }));
+
+  return {
+    paths,
+    fallback: false,
   };
 };
