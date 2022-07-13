@@ -89,6 +89,7 @@ model User {
   image         String?
   ServerReport  ServerReport[]
   AdminUser     AdminUser?
+  BannedUser    BannedUser[]
 }
 
 // Next-Auth
@@ -146,13 +147,15 @@ model AdminUser {
 model BannedUser {
   id        String @id @default(auto()) @map("_id") @db.ObjectId
   discordId String @unique
+  user      User   @relation(fields: [userId], references: [id])
+  userId    String @unique @db.ObjectId
 
   // Why this user is banned
   reason    String?
   createdAt DateTime @default(now())
 
   // Who banned this user
-  adminUser   AdminUser @relation(fields: [adminUserId], references: [id])
+  adminUser   AdminUser @relation(fields: [adminUserId], references: [id], onDelete: Cascade)
   adminUserId String    @db.ObjectId
 }
 
