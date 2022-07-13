@@ -18,7 +18,7 @@ export default function Index() {
     isFetchingNextPage,
     status,
   } = useInfiniteQuery("scamservers", fetchScamServer, {
-    getNextPageParam: (lastPage) => lastPage.data.cursor,
+    getNextPageParam: (lastPage) => lastPage?.data?.cursor ?? null,
   });
   return (
     <>
