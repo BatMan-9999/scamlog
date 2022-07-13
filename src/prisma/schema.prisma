@@ -116,14 +116,29 @@ model VerificationToken {
 }
 
 model AdminUser {
-  id          String          @id @default(auto()) @map("_id") @db.ObjectId
-  user        User?           @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId      String          @unique
-  discordId   String          @unique
-  createdAt   DateTime        @default(now())
-  updatedAt   DateTime        @default(now())
+  id          String            @id @default(auto()) @map("_id") @db.ObjectId
+  user        User?             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String            @unique
+  discordId   String            @unique
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @default(now())
   permissions UserPermissions[] @default([MANAGE_SERVERS])
-  roles       Roles[]         @default([MEMBER])
+  roles       Roles[]           @default([MEMBER])
+  BannedUser  BannedUser[]
+}
+
+// Banned users cannot add new reports. AdminUser's can't be banned
+model BannedUser {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  discordId String @unique
+
+  // Why this user is banned
+  reason    String?
+  createdAt DateTime @default(now())
+
+  // Who banned this user
+  adminUser   AdminUser @relation(fields: [adminUserId], references: [id])
+  adminUserId String    @db.ObjectId
 }
 
 // ENUMS \\
