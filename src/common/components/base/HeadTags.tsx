@@ -4,7 +4,7 @@ export default function HeadTags() {
       <title>Scam Log</title>
 
       {/* Meta tags for embed */}
-      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:card" content="summary" />
       <meta
         name="twitter:title"
         content="Scam Log - A community-driven database of known scam servers"
