@@ -183,7 +183,7 @@ export default function ScamServerCard({
       <Link href={`/servers/${id}`}>
         <div className="card-actions bg-primary hover:bg-secondary transition-colors text-center cursor-pointer py-2 flex justify-center self-end w-full">
           <span className="font-semibold">
-            View Report {nsfw ? <NSFWBadge /> : null}
+            <span className="inline-block align-middle">View Report</span> {nsfw ? <NSFWBadge /> : null}
           </span>
         </div>
       </Link>
