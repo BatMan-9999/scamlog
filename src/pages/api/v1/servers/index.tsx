@@ -54,9 +54,19 @@ export default async function handler(
       name: req.query.name
         ? {
             contains: req.query.name,
+            mode: "insensitive"
           }
         : undefined,
       serverId: req.query.serverId || undefined,
+    },
+
+    include: {
+      approvedBy: {
+        include: {
+          user: true,
+        },
+      },
+      createdByUser: true,
     },
   });
 
