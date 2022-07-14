@@ -141,7 +141,7 @@ export default async function handler(
       },
       memberCount: invite.approximate_member_count!,
       name: invite.guild.name,
-      verificationLevel: 0,
+      verificationLevel: invite.guild.verification_level ?? 0,
       inviteCodes: req.body.inviteCodes,
       serverId: invite.guild.id,
       adminIds: req.body.adminIds ?? [],
