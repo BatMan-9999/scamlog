@@ -1,6 +1,7 @@
 import checkPerms from "@/modules/auth/permissions/functions/checkPerms";
-import { useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React, { ReactNode } from "react";
 import { Edit, FilePlus, Flag, Monitor, Slash, Users } from "react-feather";
 
@@ -14,15 +15,17 @@ export default function DrawerLayout({ children }: React.PropsWithChildren) {
       </div>
     );
 
-  if (session.status === "unauthenticated")
+  if (session.status === "unauthenticated") {
+    signIn("discord");
+
     return (
       <div className="flex flex-col justify-center items-center text-center">
         <span className="text-xl loading">
-          You&apos;re not logged in. Please log in to continue.
+          You&apos;re not logged in. Redirecting to login page...
         </span>
       </div>
     );
-
+  }
   if (!session.data?.admin)
     return (
       <div className="flex flex-col justify-center items-center text-center">
