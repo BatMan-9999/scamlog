@@ -299,8 +299,29 @@ export default function Report() {
                     });
                   }
                   if (response.status === 403)
-                    // Cleanup form
-                    setAdminIds([]);
+                    return toast(
+                      "You've been smashed to bits by the ban hammer",
+                      { type: "error" }
+                    );
+
+                  if (response.status === 500)
+                    return toast("Something went wrong. Try again later!", {
+                      type: "error",
+                    });
+
+                  if (response.status === 400)
+                    return toast((await response.json()).message, {
+                      type: "error",
+                    });
+
+                  if (response.status === 409)
+                    return toast("Report already exists", {
+                      type: "error",
+                    });
+
+                    if(response.status === 404) return toast("Server not found", {type: "error"})
+                  // Cleanup form
+                  setAdminIds([]);
                   setEvidenceLinks([]);
                   setInvite("");
                   setLongReport("");
