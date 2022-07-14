@@ -138,10 +138,16 @@ export default async function Action(
       },
     });
 
+    await prisma?.serverReport.delete({
+      where: {
+        id: req.body.id,
+      },
+    });
+
     return res.status(201).json({
-      message: "Report created",
-      data: result
-    })
+      message: "ScamServer created",
+      data: result,
+    });
   }
 
   return res.status(405).json({
