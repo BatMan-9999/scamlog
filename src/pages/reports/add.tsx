@@ -20,6 +20,7 @@ export default function Report() {
     useState<Prisma.ScamServerCreateInput["serverType"]>("QR");
   const [nsfw, setNSFW] = useState(false);
   const [isDuplicated, setIsDuplicated] = useState(false);
+  const [fourTwoNines, setFourTwoNines] = useState(0);
   const debouncedInvite = useDebounce(invite, 800);
 
   const inviteQuery = useQuery(
@@ -80,7 +81,7 @@ export default function Report() {
               <h2 className="text-lg font-semibold">Report a Server</h2>
               <span>
                 False reports are <span className="text-error">bannable</span>.
-                All reports reviewed by trained staff.
+                All reports are reviewed by our staff.
               </span>
             </div>
           </div>
@@ -257,10 +258,10 @@ export default function Report() {
               <button
                 className="btn btn-primary w-full"
                 type="button"
-                onClick={() => {
+                onClick={async () => {
                   // Form submisson logic
 
-                  const promise = fetch(`/api/v1/reports/new`, {
+                  const response = await fetch(`/api/v1/reports/new`, {
                     credentials: "include",
                     method: "POST",
                     headers: {
@@ -276,11 +277,33 @@ export default function Report() {
                     }),
                   });
 
-                  // Cleanup form
-                  setAdminIds([]);
+                  const funnyResponses = [
+                    "Oi! TOO MANY REPORTS",
+                    "BRO I SAID TOO MANY REPORTS",
+                    "Bro it's too many",
+                    "... Could you not, Too many reports!",
+                    "I'll say this again, too many reports!",
+                    "Y'know what? I ain't paid enough for this. I give up.",
+                  ];
+
+                  if (response.status === 429) {
+                    if (fourTwoNines === 0)
+                      return toast("Too many reports! Try again later!", {
+                        type: "error",
+                      });
+
+                    if (fourTwoNines > funnyResponses.length - 1) return;
+
+                    return toast(funnyResponses[fourTwoNines] ?? "", {
+                      type: "error",
+                    });
+                  }
+                  if (response.status === 403)
+                    // Cleanup form
+                    setAdminIds([]);
                   setEvidenceLinks([]);
                   setInvite("");
-                  setLongReport("")
+                  setLongReport("");
                 }}
               >
                 Submit
