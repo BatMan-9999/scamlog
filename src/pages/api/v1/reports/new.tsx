@@ -81,6 +81,15 @@ export default async function handler(
     }
   }
 
+  if (req.body.adminIds.length) {
+    if (
+      req.body.adminIds.some((id: number | string) => id.toString().length < 17)
+    )
+      return res.status(400).json({
+        message: "Admin IDs cannot be less than 17 digits",
+        data: null,
+      });
+  }
 
   if (!req.body?.inviteCodes?.length)
     return res.status(400).json({
