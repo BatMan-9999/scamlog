@@ -1,3 +1,4 @@
+import NSFWBadge from "@/common/components/badges/NSFWBadge";
 import ServerTypeTranslation from "@/modules/translation/enum/ServerType";
 import { Tooltip } from "@nextui-org/react";
 import { ScamServer } from "@prisma/client";
@@ -182,10 +183,7 @@ export default function ScamServerCard({
       <Link href={`/servers/${id}`}>
         <div className="card-actions bg-primary hover:bg-secondary transition-colors text-center cursor-pointer py-2 flex justify-center self-end w-full">
           <span className="font-semibold">
-            View Report{" "}
-            {nsfw ? (
-              <span className="badge badge-warning ml-1">NSFW</span>
-            ) : null}
+            View Report {nsfw ? <NSFWBadge /> : null}
           </span>
         </div>
       </Link>

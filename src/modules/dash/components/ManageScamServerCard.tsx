@@ -1,3 +1,4 @@
+import NSFWBadge from "@/common/components/badges/NSFWBadge";
 import UserCard from "@/modules/auth/components/UserCard";
 import ServerTypeTranslation from "@/modules/translation/enum/ServerType";
 import { Tooltip } from "@nextui-org/react";
@@ -132,7 +133,7 @@ export default function ScamServerCard({
         <h2 className="card-title">
           {name}{" "}
           {nsfw ? (
-            <span className="badge badge-warning align-baseline">NSFW</span>
+            <NSFWBadge/>
           ) : null}
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

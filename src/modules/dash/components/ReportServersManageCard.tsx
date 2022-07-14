@@ -1,3 +1,4 @@
+import NSFWBadge from "@/common/components/badges/NSFWBadge";
 import ServerTypeTranslation from "@/modules/translation/enum/ServerType";
 import verificationTooltips from "@/modules/translation/object/VerificationTooltips";
 import { Tooltip } from "@nextui-org/react";
@@ -128,10 +129,7 @@ export default function ReportServerManageCard({
       </figure>
       <div className="card-body mt-8">
         <h2 className="card-title">
-          {name}{" "}
-          {nsfw ? (
-            <span className="badge badge-warning align-baseline">NSFW</span>
-          ) : null}
+          {name} {nsfw ? <NSFWBadge /> : null}
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
