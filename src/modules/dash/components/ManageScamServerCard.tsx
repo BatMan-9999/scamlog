@@ -1,7 +1,13 @@
 import UserCard from "@/modules/auth/components/UserCard";
 import ServerTypeTranslation from "@/modules/translation/enum/ServerType";
 import { Tooltip } from "@nextui-org/react";
-import { AdminUser, Prisma, ScamServer, User } from "@prisma/client";
+import {
+  AdminUser,
+  Prisma,
+  ScamServer,
+  ServerType,
+  User,
+} from "@prisma/client";
 import { GuildVerificationLevel } from "discord-api-types/v10";
 import Image from "next/image";
 import Link from "next/link";
@@ -30,6 +36,8 @@ export default function ScamServerCard({
   approvedBy: AdminUser & { user: User };
 }) {
   const [newLongReport, setNewLongReport] = useState(longReport);
+  const [newNSFW, setNewNSFW] = useState(nsfw);
+  const [newServerType, setNewServerType] = useState(serverType);
 
   const deleteMut = useMutation(({ id }: { id: string }) => {
     return fetch("/api/v1/servers/action", {
@@ -200,7 +208,7 @@ export default function ScamServerCard({
       <div className="card-actions justify-end mr-2 mb-2">
         <label className="btn modal-button" htmlFor={`${id}-long-report-modal`}>
           <Edit />
-          <span className="ml-1">Edit Long Report</span>
+          <span className="ml-1">Edit</span>
         </label>
         <label className="btn btn-error modal-button" htmlFor={`${id}-modal`}>
           <Trash2 />
@@ -216,38 +224,73 @@ export default function ScamServerCard({
         />
         <div className="modal">
           <div className="modal-box">
-            <h3 className="font-bold text-lg">
-              Editing Long Report for {name}
-            </h3>
-            <div className="form-control">
-              <textarea
-                className="textarea textarea-bordered"
-                value={newLongReport ?? ""}
-                onChange={(e) => setNewLongReport(e.target.value)}
-              />
+            <h3 className="font-bold text-lg">Editing {name}</h3>
+            <div className="form-control mt-4">
+              <div className="">
+                <label className="label">
+                  <span className="label-text">Long Report</span>
+                </label>
+                <textarea
+                  className="textarea w-full textarea-bordered"
+                  value={newLongReport ?? ""}
+                  onChange={(e) => setNewLongReport(e.target.value)}
+                />
+              </div>
+              <div className="mt-4">
+                <label className="label cursor-pointer">
+                  <span className="label-text">Not Safe For Work (NSFW)</span>
+                  <input
+                    type="checkbox"
+                    className="checkbox"
+                    defaultChecked={false}
+                    checked={newNSFW}
+                    onChange={(e) => setNewNSFW(e.target.checked)}
+                  />
+                </label>
+              </div>
+              <div className="mt-4">
+                <label className="label">
+                  <span className="label-text">Server Type</span>
+                </label>
+                <select
+                  className="select select-bordered"
+                  value={newServerType}
+                  onChange={(e) => setNewServerType(e.target.value as any)}
+                >
+                  {Object.keys(ServerTypeTranslation).map((key: any) => (
+                    <option key={key} value={key}>
+                      {(ServerTypeTranslation as any)[key]}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
             <div className="modal-action">
               <label
                 htmlFor={`${id}-long-report-modal`}
                 className="btn btn-primary"
-              >
-                <Save className="align-middle" />
-                <span
-                  className="align-middle ml-1"
-                  onClick={() => {
-                    toast
-                      .promise(updateMut.mutateAsync({ id, longReport: newLongReport }), {
+                onClick={() => {
+                  toast
+                    .promise(
+                      updateMut.mutateAsync({
+                        id,
+                        longReport: newLongReport,
+                        nsfw: newNSFW,
+                        serverType: newServerType,
+                      }),
+                      {
                         pending: `Updating ${name}...`,
                         error: `Failed to update ${name}`,
                         success: `Updated ${name}`,
-                      })
-                      .then(() => {
-                        client.invalidateQueries("scamserversName");
-                      });
-                  }}
-                >
-                  Save
-                </span>
+                      }
+                    )
+                    .then(() => {
+                      client.invalidateQueries("scamserversName");
+                    });
+                }}
+              >
+                <Save className="align-middle" />
+                <span className="align-middle ml-1">Save</span>
               </label>
               <label htmlFor={`${id}-long-report-modal`} className="btn">
                 <X className="align-middle" />
@@ -272,24 +315,23 @@ export default function ScamServerCard({
               <strong>forever</strong>!
             </p>
             <div className="modal-action">
-              <label htmlFor={`${id}-modal`} className="btn btn-error">
+              <label
+                htmlFor={`${id}-modal`}
+                className="btn btn-error"
+                onClick={() => {
+                  toast
+                    .promise(deleteMut.mutateAsync({ id }), {
+                      pending: `Deleting ${name}...`,
+                      error: `Failed to delete ${name}`,
+                      success: `Deleted ${name}`,
+                    })
+                    .then(() => {
+                      client.invalidateQueries("scamserversName");
+                    });
+                }}
+              >
                 <Trash2 className="align-middle" />
-                <span
-                  className="align-middle ml-1"
-                  onClick={() => {
-                    toast
-                      .promise(deleteMut.mutateAsync({ id }), {
-                        pending: `Deleting ${name}...`,
-                        error: `Failed to delete ${name}`,
-                        success: `Deleted ${name}`,
-                      })
-                      .then(() => {
-                        client.invalidateQueries("scamserversName");
-                      });
-                  }}
-                >
-                  Delete
-                </span>
+                <span className="align-middle ml-1">Delete</span>
               </label>
               <label htmlFor={`${id}-modal`} className="btn">
                 <X className="align-middle" />
