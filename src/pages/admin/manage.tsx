@@ -1,7 +1,7 @@
 import useDebounce from "@/common/hooks/useDebounce";
 import DrawerLayout from "@/modules/dash/components/DrawerLayout";
 import ManageScamServerCard from "@/modules/dash/components/ManageScamServerCard";
-import ScamServersDisplay from "@/modules/search/components/display/ScamServersDisplay";
+import CardDisplayLayout from "@/modules/search/components/display/ScamServersDisplay";
 import { AdminUser, ScamServer, User } from "@prisma/client";
 import { useState } from "react";
 import { Search, Trash2, X } from "react-feather";
@@ -58,7 +58,7 @@ export default function Manage() {
             <Search />
           </button>
         </div>
-        <ScamServersDisplay>
+        <CardDisplayLayout>
           {data?.pages.map((page) =>
             page.data.servers.map(
               (
@@ -71,7 +71,7 @@ export default function Manage() {
               ) => <ManageScamServerCard {...server} key={server.id} />
             )
           )}
-        </ScamServersDisplay>
+        </CardDisplayLayout>
         <div className="flex flex-col justify-center items-center">
           <button
             className={`btn btn-primary ${
