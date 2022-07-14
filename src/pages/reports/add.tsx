@@ -237,6 +237,8 @@ export default function Report() {
             <textarea
               className="textarea textarea-bordered h-36 w-full"
               placeholder="Please add lots of detail."
+              value={longReport}
+              onChange={(e) => setLongReport(e.target.value)}
             />
           </div>
           <div className="mt-4 w-full">
@@ -270,7 +272,7 @@ export default function Report() {
                       longReport,
                       adminIds,
                       nsfw,
-                      evidenceLinks
+                      evidenceLinks,
                     }),
                   });
 
@@ -278,6 +280,7 @@ export default function Report() {
                   setAdminIds([]);
                   setEvidenceLinks([]);
                   setInvite("");
+                  setLongReport("")
                 }}
               >
                 Submit
