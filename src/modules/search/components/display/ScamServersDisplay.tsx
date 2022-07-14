@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function ScamServersDisplay({
+export default function CardDisplayLayout({
   children,
 }: React.PropsWithChildren) {
   return (
