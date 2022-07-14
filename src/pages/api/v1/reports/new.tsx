@@ -81,11 +81,23 @@ export default async function handler(
     }
   }
 
+
+  if (!req.body?.inviteCodes?.length)
+    return res.status(400).json({
+      message: "Missing inviteCodes",
+      data: null,
+    });
+
+  if (req.body.inviteCodes.some((code: string) => code.length < 3))
+    return res.status(400).json({
+      message: "Invite codes must be at least 3 characters long",
+      data: null,
+    });
+
   // Fetch data from Discord
   const invite: APIInvite | null = await fetch(
     `https://discord.com/api/v10/invites/${req.body.inviteCodes[0]}?with_counts=true`
   ).then((res) => res.json());
-
 
   if (!invite?.guild)
     return res.status(404).json({
