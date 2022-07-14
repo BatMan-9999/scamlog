@@ -74,13 +74,14 @@ export default async function handler(
   }
 
   if (req.method === "PATCH") {
-    req.body.id = undefined;
+    const where = {
+      id: req.body.id,
+    };
+    delete req.body.id;
     req.body.updatedAt = new Date();
-    req.body.createdAt = undefined;
+    delete req.body.createdAt;
     const result = await prisma?.scamServer.update({
-      where: {
-        id: req.body.id,
-      },
+      where,
       data: {
         ...req.body,
       },
@@ -91,8 +92,6 @@ export default async function handler(
       data: result,
     });
   }
-
-  
 
   return res.status(405).json({
     message: "Method not allowed",

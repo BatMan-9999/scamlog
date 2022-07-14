@@ -1,11 +1,12 @@
 import UserCard from "@/modules/auth/components/UserCard";
 import ServerTypeTranslation from "@/modules/translation/enum/ServerType";
 import { Tooltip } from "@nextui-org/react";
-import { AdminUser, ScamServer, User } from "@prisma/client";
+import { AdminUser, Prisma, ScamServer, User } from "@prisma/client";
 import { GuildVerificationLevel } from "discord-api-types/v10";
 import Image from "next/image";
 import Link from "next/link";
-import { Delete, Trash2, X } from "react-feather";
+import { useState } from "react";
+import { Delete, Edit, Edit2, Save, Trash2, X } from "react-feather";
 import { useMutation, useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 
@@ -23,10 +24,13 @@ export default function ScamServerCard({
   id,
   approvedBy,
   createdByUser,
+  longReport,
 }: ScamServer & {
   createdByUser: User;
   approvedBy: AdminUser & { user: User };
 }) {
+  const [newLongReport, setNewLongReport] = useState(longReport);
+
   const deleteMut = useMutation(({ id }: { id: string }) => {
     return fetch("/api/v1/servers/action", {
       credentials: "include",
@@ -39,6 +43,22 @@ export default function ScamServerCard({
       }),
     });
   });
+
+  const updateMut = useMutation(
+    ({ id, ...rest }: { id: string } & Prisma.ScamServerUpdateInput) => {
+      return fetch("/api/v1/servers/action", {
+        credentials: "include",
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id,
+          ...rest,
+        }),
+      });
+    }
+  );
 
   const client = useQueryClient();
 
@@ -178,11 +198,67 @@ export default function ScamServerCard({
         </div>
       </div>
       <div className="card-actions justify-end mr-2 mb-2">
+        <label className="btn modal-button" htmlFor={`${id}-long-report-modal`}>
+          <Edit />
+          <span className="ml-1">Edit Long Report</span>
+        </label>
         <label className="btn btn-error modal-button" htmlFor={`${id}-modal`}>
           <Trash2 />
           <span className="ml-1">Delete</span>
         </label>
       </div>
+      {/* Edit Report Modal */}
+      <>
+        <input
+          type="checkbox"
+          id={`${id}-long-report-modal`}
+          className="modal-toggle"
+        />
+        <div className="modal">
+          <div className="modal-box">
+            <h3 className="font-bold text-lg">
+              Editing Long Report for {name}
+            </h3>
+            <div className="form-control">
+              <textarea
+                className="textarea textarea-bordered"
+                value={newLongReport ?? ""}
+                onChange={(e) => setNewLongReport(e.target.value)}
+              />
+            </div>
+            <div className="modal-action">
+              <label
+                htmlFor={`${id}-long-report-modal`}
+                className="btn btn-primary"
+              >
+                <Save className="align-middle" />
+                <span
+                  className="align-middle ml-1"
+                  onClick={() => {
+                    toast
+                      .promise(updateMut.mutateAsync({ id, longReport: newLongReport }), {
+                        pending: `Updating ${name}...`,
+                        error: `Failed to update ${name}`,
+                        success: `Updated ${name}`,
+                      })
+                      .then(() => {
+                        client.invalidateQueries("scamserversName");
+                      });
+                  }}
+                >
+                  Save
+                </span>
+              </label>
+              <label htmlFor={`${id}-long-report-modal`} className="btn">
+                <X className="align-middle" />
+                <span className="align-middle ml-1">Discard Changes</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </>
+
+      {/* Delete Modal */}
       <>
         <input type="checkbox" id={`${id}-modal`} className="modal-toggle" />
         <div className="modal">
@@ -208,7 +284,7 @@ export default function ScamServerCard({
                         success: `Deleted ${name}`,
                       })
                       .then(() => {
-                        client.invalidateQueries("scamserversName", );
+                        client.invalidateQueries("scamserversName");
                       });
                   }}
                 >

@@ -160,6 +160,15 @@ model BannedUser {
   adminUserId String    @db.ObjectId
 }
 
+// Users cannot report and add banned servers
+model BannedServer {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  serverId String @unique
+
+  reason    String?
+  createdAt DateTime @default(now())
+}
+
 // ENUMS \\
 enum Roles {
   MEMBER
