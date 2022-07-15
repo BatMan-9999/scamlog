@@ -1,13 +1,16 @@
 import "../styles/globals.css";
+import "react-toastify/dist/ReactToastify.css";
 import type { AppProps } from "next/app";
-import NavBar from "@/common/components/nav/NavBar";
 import { SessionProvider } from "next-auth/react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import Head from "next/head";
-import HeadTags from "@/common/components/base/HeadTags";
 import { ReactQueryDevtools } from "react-query/devtools";
-import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
+import dynamic from "next/dynamic";
+
+// Dynamic Imports
+const HeadTags = dynamic(() => import("@/common/components/base/HeadTags"))
+const NavBar = dynamic(() => import("@/common/components/nav/NavBar"));
 
 const client = new QueryClient();
 
