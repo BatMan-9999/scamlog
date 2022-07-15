@@ -43,6 +43,7 @@ export default function ReportServerManageCard({
   longReport,
   evidenceLinks,
   adminIds,
+  inviteCodes,
 }: ServerReport & {
   createdByUser: User;
 }) {
@@ -244,6 +245,17 @@ export default function ReportServerManageCard({
                   ) : (
                     <span>No evidence links submitted</span>
                   )}
+                </div>
+                <div>
+                  <span className="text-primary block">Invite</span>
+                  <a
+                    href={`https://discord.gg/${inviteCodes[0]}`}
+                    rel="noreferrer"
+                    target={"_blank"}
+                    className="link link-primary"
+                  >
+                    discord.gg/{inviteCodes[0]}
+                  </a>
                 </div>
               </div>
             </div>

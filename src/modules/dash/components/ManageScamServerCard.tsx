@@ -32,6 +32,7 @@ export default function ScamServerCard({
   approvedBy,
   createdByUser,
   longReport,
+  inviteCodes
 }: ScamServer & {
   createdByUser: User;
   approvedBy: AdminUser & { user: User };
@@ -131,10 +132,7 @@ export default function ScamServerCard({
       </figure>
       <div className="card-body mt-8">
         <h2 className="card-title">
-          {name}{" "}
-          {nsfw ? (
-            <NSFWBadge/>
-          ) : null}
+          {name} {nsfw ? <NSFWBadge /> : null}
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
@@ -177,6 +175,12 @@ export default function ScamServerCard({
                 {new Date(createdAt).toLocaleDateString()}
               </span>
             </Tooltip>
+          </div>
+          <div>
+            <span className="text-primary block">Invite</span>
+            <a href={`https://discord.gg/${inviteCodes[0]}`} rel="noreferrer" target={"_blank"} className="link link-primary">
+              discord.gg/{inviteCodes[0]}
+            </a>
           </div>
           <div>
             <span className="block text-primary">Scam Type</span>
