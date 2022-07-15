@@ -1,13 +1,16 @@
 import { StandardAPIResponse } from "@/common/types/api/StandardAPIResponse";
 import checkPerms from "@/modules/auth/permissions/functions/checkPerms";
-import { UserWithAdminUser } from "@/modules/auth/types/prisma/User";
+import {
+  UserWithAdminUser,
+  UserWithBansAndAdminUser,
+} from "@/modules/auth/types/prisma/User";
 import { NextApiRequest, NextApiResponse } from "next";
 import { unstable_getServerSession } from "next-auth";
 import { opts } from "../../auth/[...nextauth]";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<StandardAPIResponse<UserWithAdminUser[]>>
+  res: NextApiResponse<StandardAPIResponse<UserWithBansAndAdminUser[]>>
 ) {
   const session = await unstable_getServerSession(req, res, opts);
 
@@ -63,6 +66,7 @@ export default async function handler(
 
     include: {
       AdminUser: true,
+      BannedUser: true,
     },
   });
 
