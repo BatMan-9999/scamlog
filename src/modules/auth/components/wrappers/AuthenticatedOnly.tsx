@@ -1,4 +1,4 @@
-import { useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { PropsWithChildren } from "react";
 
 export default function AuthenticatedOnly({ children }: PropsWithChildren) {
@@ -11,7 +11,8 @@ export default function AuthenticatedOnly({ children }: PropsWithChildren) {
       </div>
     );
 
-  if (session.status === "unauthenticated")
+  if (session.status === "unauthenticated") {
+    signIn("discord");
     return (
       <div className="flex flex-col justify-center items-center text-center w-96 mx-auto">
         <span className="text-xl">
@@ -19,6 +20,7 @@ export default function AuthenticatedOnly({ children }: PropsWithChildren) {
         </span>
       </div>
     );
+  }
 
   return <>{children}</>;
 }
