@@ -24,7 +24,18 @@ function ScamLog({
               <HeadTags />
               <title>Scam Log</title>
             </Head>
-            <NavBar links={[]} />
+            <NavBar
+              links={[
+                {
+                  name: "Home",
+                  url: "/",
+                },
+                {
+                  name: "Report",
+                  url: "/reports/add",
+                },
+              ]}
+            />
             <Component {...pageProps} />
             <ToastContainer theme="dark" />
             <ReactQueryDevtools />
