@@ -37,6 +37,10 @@ function ScamLog({
                   name: "Report",
                   url: "/reports/add",
                 },
+                {
+                  name: "Partners",
+                  url: "/partners"
+                }
               ]}
             />
             <Component {...pageProps} />
