@@ -1,6 +1,7 @@
 import { StandardAPIResponse } from "@/common/types/api/StandardAPIResponse";
 import { NextApiRequest, NextApiResponse } from "next";
-import { prisma } from "@/utils/prisma";
+import { prisma } from "@/common/utilities/prisma";
+
 
 export default async function handler(
   req: NextApiRequest,

@@ -1,7 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { prisma } from "@/common/utilities/prisma";
+import { prisma } from "@/utils/prisma";
 import { StandardAPIResponse } from "@/common/types/api/StandardAPIResponse";
 import { ScamServer } from "@prisma/client";
+
 
 export default async function handler(
   req: NextApiRequest,
