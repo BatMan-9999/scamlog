@@ -2,6 +2,7 @@ import checkPerms from "@/modules/auth/permissions/functions/checkPerms";
 import { NextApiRequest, NextApiResponse } from "next";
 import { unstable_getServerSession } from "next-auth";
 import { opts } from "../../auth/[...nextauth]";
+import {prisma} from "@/common/utilities/prisma";
 
 export default async function handler(
   req: NextApiRequest,
