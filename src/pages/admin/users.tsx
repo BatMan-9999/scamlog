@@ -1,4 +1,4 @@
-import FlexCenter from "@/common/components/base/FlexCenter";
+import FlexCenter from "@/common/components/base/flex/FlexCenter";
 import useDebounce from "@/common/hooks/useDebounce";
 import { StandardAPIResponse } from "@/common/types/api/StandardAPIResponse";
 import UserManageCard from "@/modules/auth/components/UserManageCard";

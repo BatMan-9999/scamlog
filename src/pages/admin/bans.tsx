@@ -1,4 +1,4 @@
-import FlexCenter from "@/common/components/base/FlexCenter";
+import FlexCenter from "@/common/components/base/flex/FlexCenter";
 import DrawerLayout from "@/modules/dash/components/DrawerLayout";
 
 export default function Bans() {
