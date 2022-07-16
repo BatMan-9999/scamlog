@@ -169,6 +169,11 @@ model BannedServer {
   createdAt DateTime @default(now())
 }
 
+model APIKey {
+  id  String @id @default(auto()) @map("_id") @db.ObjectId
+  key String @unique
+}
+
 // ENUMS \\
 enum Roles {
   MEMBER
