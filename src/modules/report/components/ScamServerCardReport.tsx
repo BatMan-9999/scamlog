@@ -1,4 +1,5 @@
 import ServerTypeTranslation from "@/modules/translation/enum/ServerType";
+import verificationTooltips from "@/modules/translation/object/VerificationTooltips";
 import { Tooltip } from "@nextui-org/react";
 import { ScamServer } from "@prisma/client";
 import { GuildVerificationLevel } from "discord-api-types/v10";
@@ -25,14 +26,6 @@ export default function ScamServerCard({
   else if (memberCount > 10000 && memberCount < 100000) size = "Large";
   else if (memberCount > 100000) size = "Ginormous";
   else size = "Unknown";
-
-  const verificationTooltips: Record<string, string> = {
-    "0": "Unrestricted",
-    "1": "Must have a verified email on their Discord account.",
-    "2": "Must be registered on Discord for longer than 5 minutes.",
-    "3": "Must be a member of the server for longer than 10 minutes.",
-    "4": "Must have a verified phone on their Discord account.",
-  };
 
   const colours: Record<string, string> = {
     Tiny: "badge-success",
@@ -97,7 +90,11 @@ export default function ScamServerCard({
           <div>
             <span className="block text-primary">Verification Level</span>
             <Tooltip
-              content={verificationTooltips[verificationLevel.toString()]}
+              content={
+                verificationTooltips[
+                  verificationLevel as GuildVerificationLevel
+                ]
+              }
             >
               <span className="">
                 {GuildVerificationLevel[verificationLevel] ?? "Unknown"}{" "}
