@@ -35,6 +35,18 @@ export default function ID({
           </Tooltip>
           <p>{data.description ?? "No description set"}</p>
 
+          <Tooltip content="Join at your own risk!">
+            <h2>Invite Links</h2>
+          </Tooltip>
+
+          <div className="not-prose flex flex-col gap-2">
+            {data.inviteCodes.map((code) => (
+              <div key={code} className="text-center hover:bg-primary border border-primary rounded-md transition-colors">
+                <a href={`https://discord.gg/${code}`} rel="noreferrer" target={"_blank"}>discord.gg/{code}</a>
+              </div>
+            ))}
+          </div>
+
           <h2>Submitted By</h2>
           {data.createdByUser ? (
             <UserCard {...data.createdByUser} />
