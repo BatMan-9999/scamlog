@@ -1,10 +1,9 @@
-import ScamServerCard from "@/modules/search/components/display/ScamServerCard";
-import ScamServersContainer from "@/modules/search/components/display/ScamServersDisplay";
 import { ScamServer } from "@prisma/client";
-import { GetStaticProps } from "next";
 import { useInfiniteQuery } from "react-query";
-import { prisma } from "@/common/utilities/prisma";
 import { useState } from "react";
+import { ViewReportScamGuildCard } from "@/modules/cards/guilds/ViewReportScamGuildCard";
+import FlexCenter from "@/common/components/base/flex/FlexCenter";
+import FlexGrid from "@/common/components/base/flex/FlexGrid";
 
 /**
  * How this page works:
@@ -13,91 +12,43 @@ import { useState } from "react";
  * When the user clicks Load More, begin using the API to load them
  */
 
-export default function Index({
-  scamServers,
-  initialCursor,
-}: {
-  scamServers: ScamServer[];
-  initialCursor: string;
-}) {
-  const [loadedFromAPI, setLoadedFromAPI] = useState(false);
-
+export default function Index() {
   const fetchScamServer = ({ pageParam }: { pageParam?: string }) =>
     fetch(`/api/v1/servers${pageParam ? `?cursor=${pageParam}` : ""}`).then(
       (res) => res.json()
     );
 
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    status,
-  } = useInfiniteQuery("scamservers", fetchScamServer, {
-    getNextPageParam: (lastPage) => lastPage?.data?.cursor ?? null,
-    enabled: loadedFromAPI,
-  });
+  const { data, fetchNextPage, hasNextPage, status } = useInfiniteQuery(
+    "scamservers",
+    fetchScamServer,
+    {
+      getNextPageParam: (lastPage) => lastPage?.data?.cursor ?? null,
+    }
+  );
   return (
     <>
-      <div className="flex flex-col justify-center items-center">
-        <ScamServersContainer>
-          {scamServers.map((server) => (
-            <ScamServerCard key={server.id} {...server} />
-          ))}
+      <FlexCenter>
+        <FlexGrid>
           {data?.pages.map((page) =>
             page?.data?.servers?.map?.((server: ScamServer) => (
-              <ScamServerCard key={server.id} {...server} />
+              <ViewReportScamGuildCard key={server.id} {...server} />
             ))
           )}
-        </ScamServersContainer>
-      </div>
-      <div className="flex flex-col items-center justify-center">
-        {loadedFromAPI ? (
-          <button
-            onClick={() => {
-              fetchNextPage();
-              setLoadedFromAPI(true);
-            }}
-            className={`btn btn-primary btn-wide ${
-              status === "loading" ? "loading" : ""
-            }`}
-            disabled={!hasNextPage}
-          >
-            {hasNextPage ? "Load more" : "You've reached the end!"}
-          </button>
-        ) : (
-          <button
-            className="btn btn-primary"
-            onClick={() => {
-              setLoadedFromAPI(true);
-              fetchNextPage({
-                pageParam: initialCursor,
-              });
-            }}
-          >
-            Load More
-          </button>
-        )}
-      </div>
+        </FlexGrid>
+      </FlexCenter>
+      <FlexCenter>
+        <button
+          onClick={() => {
+            fetchNextPage();
+          }}
+          className={`btn btn-primary btn-wide ${
+            status === "loading" ? "loading" : ""
+          }`}
+          disabled={!hasNextPage}
+        >
+          {hasNextPage ? "Load more" : "You've reached the end!"}
+        </button>
+      </FlexCenter>
     </>
   );
 }
-
-export const getStaticProps: GetStaticProps = async () => {
-  await prisma.$connect();
-
-  const scamServers = await prisma.scamServer.findMany({
-    take: 10,
-  });
-
-  return {
-    props: {
-      scamServers: scamServers.map((server) => ({
-        ...server,
-        createdAt: server.createdAt.toISOString(),
-        updatedAt: server.updatedAt.toISOString(),
-      })),
-      initialCursor: scamServers[scamServers.length - 1].id,
-    },
-    revalidate: 5,
-  };
-};
