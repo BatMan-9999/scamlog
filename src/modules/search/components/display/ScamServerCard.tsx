@@ -1,10 +1,16 @@
 import NSFWBadge from "@/common/components/badges/NSFWBadge";
+import CardBottomAction from "@/modules/cards/actions/CardBottomAction";
+import BaseGuildCard from "@/modules/cards/BaseGuildCard";
+import CardPropertiesGrid from "@/modules/cards/properties/CardPropertiesGrid";
+import CardProperty from "@/modules/cards/properties/CardProperty";
 import ServerTypeTranslation from "@/modules/translation/enum/ServerType";
+import verificationTooltips from "@/modules/translation/object/VerificationTooltips";
 import { Tooltip } from "@nextui-org/react";
 import { ScamServer } from "@prisma/client";
 import { GuildVerificationLevel } from "discord-api-types/v10";
 import Image from "next/image";
 import Link from "next/link";
+import guildSize, { guildSizeColor } from "../../util/guildSize";
 
 export default function ScamServerCard({
   name,
@@ -19,174 +25,84 @@ export default function ScamServerCard({
   nsfw,
   id,
 }: ScamServer) {
-  let size: string;
-  if (memberCount < 500) size = "Tiny";
-  else if (memberCount > 500 && memberCount < 1000) size = "Small";
-  else if (memberCount > 1000 && memberCount < 10000) size = "Medium";
-  else if (memberCount > 10000 && memberCount < 100000) size = "Large";
-  else if (memberCount > 100000) size = "Ginormous";
-  else size = "Unknown";
+  const size = guildSize(memberCount);
+  const badgeColour = guildSizeColor(size);
 
-  const verificationTooltips: Record<string, string> = {
-    "0": "Unrestricted",
-    "1": "Must have a verified email on their Discord account.",
-    "2": "Must be registered on Discord for longer than 5 minutes.",
-    "3": "Must be a member of the server for longer than 10 minutes.",
-    "4": "Must have a verified phone on their Discord account.",
-  };
-
-  const colours: Record<string, string> = {
-    Tiny: "badge-success",
-    Small: "badge-info",
-    Medium: "badge-primary",
-    Large: "badge-warning",
-    Ginormous: "badge-outline badge-danger",
-    Unknown: "badge-neutral",
-  };
+  const createdAtDate = new Date(createdAt);
 
   return (
-    // <div className="card card-compact w-80 md:w-96 rounded-md bg-base-300">
-    //   <figure>
-    //     {bannerHash ? (
-    //       <Image
-    //         src={`https://cdn.discordapp.com/banners/${serverId}/${bannerHash}?size=2048`}
-    //         alt="Server banner"
-    //         layout="fixed"
-    //         width={500}
-    //         height={170}
-    //       />
-    //     ) : null}
-    //   </figure>
-    //   <div className="card-body">
-    //     <h2 className="card-title">{name}</h2>
-    //     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-    //       <div>
-    //         <span className="block text-primary">Server ID</span>
-    //         <span>{serverId}</span>
-    //       </div>
-    //       <div>
-    //         <span className="block text-primary">Created At</span>
-    //         <span>{new Date(createdAt).toLocaleDateString()} Local Time</span>
-    //       </div>
-    //       <div>
-    //         <span className="block text-primary">Scam Type</span>
-    //         <span className="capitalize">{serverType.toLowerCase()}</span>
-    //       </div>
-    //       <div>
-    //         <span className="block text-primary">Member Count</span>
-    //         <span className="">
-    //           {memberCount.toLocaleString() ?? "Unknown"}{" "}
-    //           <span className={`ml-1 badge ${colours[size]}`}>{size}</span>
-    //         </span>
-    //       </div>
-    //     </div>
-    //   </div>
-    //   <div className="card-actions bg-primary hover:bg-secondary transition-colors text-center cursor-pointer py-2 flex justify-center">
-    //     <span className="font-semibold">View Report</span>
-    //   </div>
-    // </div>
-
-    <div className="card card-compact w-80 md:w-96 rounded-md bg-base-300 flex">
-      <figure className="relative">
-        {bannerHash ? (
-          nsfw ? (
-            <Image
-              src={`/static/img/nsfw.png`}
-              alt="NSFW Server banner (censored)"
-              layout="fixed"
-              width={500}
-              height={170}
-            />
-          ) : (
-            <Image
-              src={`https://cdn.discordapp.com/banners/${serverId}/${bannerHash}?size=2048`}
-              alt="Server banner"
-              layout="fixed"
-              width={500}
-              height={170}
-            />
-          )
-        ) : (
-          <Image
-            src={`/static/img/missingno.png`}
-            alt="Missing server banner"
-            layout="fixed"
-            width={500}
-            height={170}
-          />
-        )}
-        {
-          <div className="absolute -bottom-10 left-5">
-            <Image
-              src={`https://cdn.discordapp.com/icons/${serverId}/${iconHash}?size=512`}
-              alt="Server icon"
-              layout="fixed"
-              width={80}
-              height={80}
-              className="rounded-full !border-base-300 !border-8 !border-solid"
-            />
-          </div>
-        }
-      </figure>
-      <div className="card-body mt-8">
-        <h2 className="card-title">{name}</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <span className="block text-primary">Server ID</span>
-            <span>{serverId}</span>
-          </div>
-          <div>
-            <Tooltip
-              content={"Approximate member count, which may not be accurate."}
-            >
-              <span className="block text-primary">Member Count</span>
-            </Tooltip>
-            <span className="">
-              {memberCount.toLocaleString() ?? "Unknown"}{" "}
-              <span className={`badge ${colours[size]}`}>{size}</span>
-            </span>
-          </div>
-          <div>
-            <span className="block text-primary">Verification Level</span>
-            <Tooltip
-              content={verificationTooltips[verificationLevel.toString()]}
-            >
-              <span className="">
-                {GuildVerificationLevel[verificationLevel] ?? "Unknown"}{" "}
+    <BaseGuildCard
+      name={name}
+      bannerHash={bannerHash}
+      iconHash={iconHash}
+      serverId={serverId}
+      nsfw={nsfw}
+      outerChildren={
+        <>
+          <Link href={`/servers/${id}`}>
+            <CardBottomAction>
+              <span className="font-semibold">
+                <span className="inline-block align-middle">View Report</span>
+                {nsfw ? <NSFWBadge /> : null}
               </span>
-            </Tooltip>
-          </div>
-          <div>
-            <span className="block text-primary">Server Description</span>
-            <span className="">{description ?? "No description set"}</span>
-          </div>
-          <div>
-            <span className="block text-primary">Added to Database on</span>
-            <Tooltip
-              content={`${new Date(createdAt).toLocaleDateString()} ${new Date(
-                createdAt
-              ).toLocaleTimeString()} Local Time`}
-            >
-              <span className="">
-                {new Date(createdAt).toLocaleDateString()}
-              </span>
-            </Tooltip>
-          </div>
-          <div>
-            <span className="block text-primary">Scam Type</span>
-            <span className="capitalize">
-              {ServerTypeTranslation[serverType]}
+            </CardBottomAction>
+          </Link>
+        </>
+      }
+    >
+      <CardPropertiesGrid>
+        <CardProperty name="Server ID">
+          <span>{serverId}</span>
+        </CardProperty>
+        <CardProperty
+          name="Members"
+          tooltip="Approximate amount. May not be accurate"
+        >
+          <span>{memberCount ? memberCount.toLocaleString() : "Unknown"}</span>
+          <span className={`ml-1 badge ${badgeColour}`}>{size}</span>
+        </CardProperty>
+        <CardProperty
+          name="Verification Level"
+          tooltip="This means what requirements a users has to fulfill to participate in this server"
+        >
+          <Tooltip
+            content={
+              verificationTooltips[verificationLevel as GuildVerificationLevel]
+            }
+          >
+            <span>
+              {GuildVerificationLevel[verificationLevel] ?? "Unknown"}{" "}
             </span>
-          </div>
-        </div>
-      </div>
-      <Link href={`/servers/${id}`}>
-        <div className="card-actions bg-primary hover:bg-secondary transition-colors text-center cursor-pointer py-2 flex justify-center self-end w-full">
-          <span className="font-semibold">
-            <span className="inline-block align-middle">View Report</span> {nsfw ? <NSFWBadge /> : null}
-          </span>
-        </div>
-      </Link>
-    </div>
+          </Tooltip>
+        </CardProperty>
+        <CardProperty
+          name="Server Description"
+          tooltip="This is set by the server owners"
+        >
+          <span>{description ?? "No description found"}</span>
+        </CardProperty>
+        <CardProperty name="Added to Database at">
+          <span>{createdAtDate.toLocaleString()} Local Time</span>
+        </CardProperty>
+        <CardProperty
+          name="Scam Type"
+          tooltip="The type of scam this server is operating"
+        >
+          <span>{ServerTypeTranslation[serverType]}</span>
+        </CardProperty>
+        <CardProperty
+          name="Database ID"
+          tooltip="The internal ID used in the database"
+        >
+          <span>{id}</span>
+        </CardProperty>
+      </CardPropertiesGrid>
+    </BaseGuildCard>
   );
 }
+/**
+ */
+
+/**
+
+ */
