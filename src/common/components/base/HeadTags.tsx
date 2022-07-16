@@ -32,6 +32,10 @@ export default function HeadTags() {
       />
       <meta property="og:type" content="website" />
       <meta property="og:image" content="/static/img/favicon.png" />
+
+      {/* Other */}
+
+      <meta property="theme-color" content="#4758e8" />
     </>
   );
 }
