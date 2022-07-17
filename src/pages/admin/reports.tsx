@@ -1,8 +1,8 @@
+import CardGrid from "@/common/components/base/grid/CardGrid";
 import useDebounce from "@/common/hooks/useDebounce";
 import DrawerLayout from "@/modules/dash/components/DrawerLayout";
 import ManageScamServerCard from "@/modules/dash/components/ManageScamServerCard";
 import ReportServerManageCard from "@/modules/dash/components/ReportServersManageCard";
-import CardDisplayLayout from "@/modules/search/components/display/ScamServersDisplay";
 import { ScamServer, ServerReport } from "@prisma/client";
 import { User } from "@prisma/client";
 import { useState } from "react";
@@ -60,7 +60,7 @@ export default function Reports() {
             <Search />
           </button>
         </div>
-        <CardDisplayLayout>
+        <CardGrid>
           {data?.pages.map((page) =>
             page.data.servers.map(
               (
@@ -70,7 +70,7 @@ export default function Reports() {
               ) => <ReportServerManageCard key={report.id} {...report} />
             )
           )}
-        </CardDisplayLayout>
+        </CardGrid>
       </div>
     </DrawerLayout>
   );
