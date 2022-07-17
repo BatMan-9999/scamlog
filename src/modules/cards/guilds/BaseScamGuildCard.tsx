@@ -10,7 +10,7 @@ import { ScamServer } from "@prisma/client";
 import { GuildVerificationLevel } from "discord-api-types/v10";
 import Link from "next/link";
 import guildSize, { guildSizeColor } from "@/utils/guildSize";
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, ReactNode } from "react";
 
 export default function BaseScamServerCard({
   server: {
@@ -27,6 +27,7 @@ export default function BaseScamServerCard({
     id,
   },
   children,
+  extraProps,
 }: BaseScamGuildCardProps & PropsWithChildren) {
   const size = guildSize(memberCount);
   const badgeColour = guildSizeColor(size);
@@ -88,6 +89,7 @@ export default function BaseScamServerCard({
         >
           <span>{id}</span>
         </CardProperty>
+        {extraProps ?? null}
       </CardPropertiesGrid>
     </BaseGuildCard>
   );
@@ -95,4 +97,5 @@ export default function BaseScamServerCard({
 
 export interface BaseScamGuildCardProps {
   server: ScamServer;
+  extraProps?: ReactNode;
 }
