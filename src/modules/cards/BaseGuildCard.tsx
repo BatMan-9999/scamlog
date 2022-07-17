@@ -1,5 +1,6 @@
 import { PropsWithChildren, ReactNode } from "react";
 import Image from "next/image";
+import NSFWBadge from "@/common/components/badges/NSFWBadge";
 
 export default function BaseGuildCard({
   children,
@@ -73,7 +74,9 @@ export default function BaseGuildCard({
         </div>
       </figure>
       <div className="card-body mt-8">
-        <h3 className="card-title">{name}</h3>
+        <h3 className="card-title">
+          {name} {nsfw ? <NSFWBadge /> : null}
+        </h3>
         {children}
       </div>
       {outerChildren ?? null}
