@@ -87,7 +87,7 @@ export default function BaseScamServerCard({
           name="Database ID"
           tooltip="The internal ID used in the database"
         >
-          <span>{id}</span>
+          <span className="break-words">{id}</span>
         </CardProperty>
         {extraProps ?? null}
       </CardPropertiesGrid>
