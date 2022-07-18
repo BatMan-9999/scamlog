@@ -65,7 +65,7 @@ export default function BaseGuildCard({
             nsfw !== undefined ? (
               nsfw ? (
                 <Image
-                  src={`/static/img/nsfwguild.png`}
+                  src={`/static/img/noimg.png`}
                   alt="Server icon"
                   layout="fixed"
                   width={80}
