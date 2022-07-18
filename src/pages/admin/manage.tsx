@@ -2,7 +2,6 @@ import FlexGrid from "@/common/components/base/flex/FlexGrid";
 import useDebounce from "@/common/hooks/useDebounce";
 import ManageScamGuildCard from "@/modules/cards/guilds/ManageScamGuildCard";
 import DrawerLayout from "@/modules/dash/components/DrawerLayout";
-import ManageScamServerCard from "@/modules/dash/components/ManageScamServerCard";
 import { AdminUser, ScamServer, User } from "@prisma/client";
 import { useState } from "react";
 import { Search, Trash2, X } from "react-feather";
