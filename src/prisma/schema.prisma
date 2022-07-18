@@ -89,7 +89,7 @@ model User {
   image          String?
   ServerReport   ServerReport[]
   AdminUser      AdminUser?
-  BannedUser     BannedUser[]
+  BannedUser     BannedUser?
   reportCoolDown DateTime?
 }
 
