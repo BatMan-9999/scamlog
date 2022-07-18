@@ -88,16 +88,27 @@ export default function BaseGuildCard({
               )
             ) : (
               <Image
-                  src={`/static/img/noimg.png`}
-                  alt="Server icon"
-                  layout="fixed"
-                  width={80}
-                  height={80}
-                  // Workarounds for circle around image
-                  // Shouldn't break with transparent images
-                  className="rounded-full !border-base-300 !border-8 !border-solid !bg-base-300"
-                />
+                src={`/static/img/noimg.png`}
+                alt="Server icon"
+                layout="fixed"
+                width={80}
+                height={80}
+                // Workarounds for circle around image
+                // Shouldn't break with transparent images
+                className="rounded-full !border-base-300 !border-8 !border-solid !bg-base-300"
+              />
             )
+          ) : (
+            <Image
+              src={`/static/img/noimg.png`}
+              alt="Server icon"
+              layout="fixed"
+              width={80}
+              height={80}
+              // Workarounds for circle around image
+              // Shouldn't break with transparent images
+              className="rounded-full !border-base-300 !border-8 !border-solid !bg-base-300"
+            />
           )}
         </div>
       </figure>
