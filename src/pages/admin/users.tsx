@@ -1,13 +1,13 @@
 import FlexCenter from "@/common/components/base/flex/FlexCenter";
+import FlexGrid from "@/common/components/base/flex/FlexGrid";
 import useDebounce from "@/common/hooks/useDebounce";
 import { StandardAPIResponse } from "@/common/types/api/StandardAPIResponse";
-import UserManageCard from "@/modules/auth/components/UserManageCard";
 import {
   UserWithAdminUser,
   UserWithBansAndAdminUser,
 } from "@/modules/auth/types/prisma/User";
+import UserManageCard from "@/modules/cards/users/UserManageCard";
 import DrawerLayout from "@/modules/dash/components/DrawerLayout";
-import CardDisplayLayout from "@/modules/search/components/display/ScamServersDisplay";
 import { User } from "@prisma/client";
 import { useState } from "react";
 import { Search } from "react-feather";
@@ -46,7 +46,7 @@ export default function Users() {
             <Search />
           </button>
         </div>
-        <CardDisplayLayout>
+        <FlexGrid>
           {usersQuery.data?.data?.length ? (
             usersQuery.data.data.map((user) => (
               <UserManageCard key={user.id} {...user} />
@@ -54,7 +54,7 @@ export default function Users() {
           ) : (
             <span>No users found</span>
           )}
-        </CardDisplayLayout>
+        </FlexGrid>
       </FlexCenter>
     </DrawerLayout>
   );
