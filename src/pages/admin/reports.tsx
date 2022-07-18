@@ -1,7 +1,6 @@
 import CardGrid from "@/common/components/base/grid/CardGrid";
 import useDebounce from "@/common/hooks/useDebounce";
 import DrawerLayout from "@/modules/dash/components/DrawerLayout";
-import ManageScamServerCard from "@/modules/dash/components/ManageScamServerCard";
 import ReportServerManageCard from "@/modules/dash/components/ReportServersManageCard";
 import { ScamServer, ServerReport } from "@prisma/client";
 import { User } from "@prisma/client";
