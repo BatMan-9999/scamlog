@@ -88,7 +88,7 @@ export default function BaseGuildCard({
               )
             ) : (
               <Image
-                src={`/static/img/noimg.png`}
+                src={`https://cdn.discordapp.com/icons/${serverId}/${iconHash}?size=512`}
                 alt="Server icon"
                 layout="fixed"
                 width={80}
