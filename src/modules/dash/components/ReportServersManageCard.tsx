@@ -185,6 +185,17 @@ export default function ReportServerManageCard({
             </span>
           </div>
           <div>
+            <span className="block text-primary">Invite URL</span>
+            <a
+              className="link"
+              rel="noreferrer"
+              target={"_blank"}
+              href={`https://discord.gg/${inviteCodes[0]}`}
+            >
+              {`discord.gg/${inviteCodes[0]}`}
+            </a>
+          </div>
+          <div>
             <span className="block text-primary">Created By</span>
             <span>
               {createdByUser.name} ({createdByUser.id})
