@@ -175,11 +175,14 @@ model APIKey {
 }
 
 model MovementGuild {
-  id     String @id @default(auto()) @map("_id") @db.ObjectId
-  name   String
-  url    String
-  banner String
-  icon   String
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  serverId    String  @unique
+  name        String
+  url         String
+  bannerHash  String
+  iconHash    String
+  partnered   Boolean
+  description String
 }
 
 // ENUMS \\

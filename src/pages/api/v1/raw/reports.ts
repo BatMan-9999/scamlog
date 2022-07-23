@@ -50,7 +50,7 @@ export default async function handler(
 
   await prisma.$connect();
 
-  if (req.body.adminIds.length) {
+  if (req.body.adminIds?.length) {
     if (
       req.body.adminIds.some((id: number | string) => id.toString().length < 17)
     )
@@ -117,6 +117,11 @@ export default async function handler(
       nsfw: req.body.nsfw,
       serverType: req.body.serverType,
       iconHash: invite.guild.icon,
+      createdByUser: {
+        connect: {
+          id: "62db418ccbf1eedadf97f0ad",
+        },
+      },
     },
   });
 
