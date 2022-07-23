@@ -2,9 +2,16 @@ import CardGrid from "@/common/components/base/grid/CardGrid";
 import { GetStaticProps } from "next";
 import { prisma } from "@/utils/prisma";
 import { MovementGuild } from "@prisma/client";
+import MovementGuildCard from "@/modules/cards/guilds/MovementGuildCard";
 
 export default function Partners({ partners }: { partners: MovementGuild[] }) {
-  return <CardGrid></CardGrid>;
+  return (
+    <CardGrid>
+      {partners.map((p) => (
+        <MovementGuildCard movementGuild={p} key={p.id} />
+      ))}
+    </CardGrid>
+  );
 }
 
 export const getStaticProps: GetStaticProps = async () => {
@@ -14,5 +21,6 @@ export const getStaticProps: GetStaticProps = async () => {
     props: {
       partners: await prisma.movementGuild.findMany({}),
     },
+    revalidate: 30,
   };
 };
