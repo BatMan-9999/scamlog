@@ -1,5 +1,7 @@
 import CardGrid from "@/common/components/base/grid/CardGrid";
 import useDebounce from "@/common/hooks/useDebounce";
+import { GuildReportWithCreatedByUser } from "@/common/types/prisma/GuildReport";
+import ManageReportGuildCard from "@/modules/cards/guilds/ManageReportGuildCard";
 import DrawerLayout from "@/modules/dash/components/DrawerLayout";
 import ReportServerManageCard from "@/modules/dash/components/ReportServersManageCard";
 import { ScamServer, ServerReport } from "@prisma/client";
@@ -61,13 +63,9 @@ export default function Reports() {
         </div>
         <CardGrid>
           {data?.pages.map((page) =>
-            page.data.servers.map(
-              (
-                report: ServerReport & {
-                  createdByUser: User;
-                }
-              ) => <ReportServerManageCard key={report.id} {...report} />
-            )
+            page.data.servers.map((report: GuildReportWithCreatedByUser) => (
+              <ManageReportGuildCard key={report.id} {...report} />
+            ))
           )}
         </CardGrid>
       </div>
