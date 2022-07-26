@@ -4,6 +4,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { unstable_getServerSession } from "next-auth";
 import { opts } from "../../auth/[...nextauth]";
 import { prisma } from "@/common/utilities/prisma";
+import { Prisma } from "@prisma/client";
 
 export default async function Action(
   req: NextApiRequest,
@@ -84,14 +85,17 @@ export default async function Action(
   }
 
   if (req.method === "PATCH") {
+    const data: Prisma.ServerReportUpdateInput = {
+      ...req.body,
+      id: undefined,
+      updatedAt: new Date(),
+    };
     const result = await prisma?.serverReport
       .update({
         where: {
           id: req.body.id,
         },
-        data: {
-          ...req.body,
-        },
+        data,
       })
       .catch((e) => "error" as const);
 
