@@ -59,12 +59,14 @@ export default function ManageReportGuildCard({
         nsfw={guild.nsfw}
         outerChildren={
           <>
-            <CardBottomAction>
-              <FlexVertical>
-                <Edit />
-                <span className="font-semibold ml-1">Edit</span>
-              </FlexVertical>
-            </CardBottomAction>
+            <label htmlFor={`${guild.id}-reportedit-modal`}>
+              <CardBottomAction>
+                <FlexVertical>
+                  <Edit />
+                  <span className="font-semibold ml-1">Edit</span>
+                </FlexVertical>
+              </CardBottomAction>
+            </label>
             <div
               onClick={(e) =>
                 toast.promise(
@@ -123,7 +125,7 @@ export default function ManageReportGuildCard({
             <span>{guild.description ?? "No description set"}</span>
           </CardProperty>
           <CardProperty name="Description of Scam">
-            <span className="break break-words">{guild.longReport}</span>
+            <span className="break break-words">{guild.longReport || "No report supplied by user"}</span>
           </CardProperty>
         </CardPropertiesGrid>
       </BaseGuildCard>
