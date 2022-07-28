@@ -129,7 +129,6 @@ export default async function handler(
           connect: {
             id: target?.id,
           },
-          
         },
         adminUser: {
           connect: {
@@ -140,6 +139,19 @@ export default async function handler(
         discordId: target.Account[0].providerAccountId,
       },
     });
+
+    try {
+      await prisma.adminUser.delete({
+        where: {
+          userId: target.id,
+        },
+      });
+    } catch (e) {
+      return res.status(200).json({
+        message: "User banned",
+        data: null,
+      });
+    }
 
     return res.status(200).json({
       message: "User banned",
