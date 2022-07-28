@@ -5,18 +5,15 @@ export default function HeadTags() {
 
       {/* Meta tags for embed */}
       <meta name="twitter:card" content="summary_large_image" />
-      <meta
-        name="twitter:title"
-        content="Scam Log - A community-driven database of known scam servers"
-      />
+      <meta name="twitter:title" content="Scam Log" />
       <meta
         name="twitter:description"
         // lol github copilot
         content="Scam Log is a community-driven database of known Discord scam servers. It is a free service that anyone can use to keep track of known scam servers, and report discovered ones."
       />
-      <meta name="twitter:image" content="/static/card/shields.png" />
+      <meta name="twitter:image" content="/static/card/scamlog.png" />
 
-      <meta name="theme-color" content="#4758e8" />
+      <meta name="theme-color" content="#606DE7" />
 
       {/* Open Graph */}
 
@@ -32,10 +29,6 @@ export default function HeadTags() {
       />
       <meta property="og:type" content="website" />
       <meta property="og:image" content="/static/img/favicon.png" />
-
-      {/* Other */}
-
-      <meta property="theme-color" content="#4758e8" />
     </>
   );
 }
