@@ -150,7 +150,7 @@ export default async function Action(
     });
 
     return res.status(201).json({
-      message: "ScamServer created",
+      message: "Scam Server created",
       data: result,
     });
   }
