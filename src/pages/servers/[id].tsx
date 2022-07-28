@@ -16,6 +16,16 @@ export default function ID({
   data: false | (ScamServer & { createdByUser: User | null });
   text: MDXRemoteSerializeResult;
 }) {
+  const { isFallback } = useRouter();
+
+  if (isFallback) {
+    return (
+      <div className="text-center font-bold text-success">
+        Generating page...
+      </div>
+    );
+  }
+
   if (!data) return <div className="text-center font-bold text-error">404</div>;
 
   return (
@@ -41,8 +51,17 @@ export default function ID({
 
           <div className="not-prose flex flex-col gap-2">
             {data.inviteCodes.map((code) => (
-              <div key={code} className="text-center hover:bg-primary border border-primary rounded-md transition-colors">
-                <a href={`https://discord.gg/${code}`} rel="noreferrer" target={"_blank"}>discord.gg/{code}</a>
+              <div
+                key={code}
+                className="text-center hover:bg-primary border border-primary rounded-md transition-colors"
+              >
+                <a
+                  href={`https://discord.gg/${code}`}
+                  rel="noreferrer"
+                  target={"_blank"}
+                >
+                  discord.gg/{code}
+                </a>
               </div>
             ))}
           </div>
@@ -88,8 +107,20 @@ export const getStaticProps: GetStaticProps = async (context) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
+  const paths = (
+    await prisma.scamServer.findMany({
+      select: {
+        id: true,
+      },
+    })
+  ).map(({ id }) => ({
+    params: {
+      id,
+    },
+  }));
+
   return {
-    paths: [],
+    paths,
     fallback: true,
   };
 };
