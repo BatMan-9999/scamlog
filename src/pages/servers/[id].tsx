@@ -88,22 +88,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  await prisma.$connect();
-
-  const prismaQuery = await prisma.scamServer.findMany({
-    select: {
-      id: true,
-    },
-  });
-
-  const paths = prismaQuery.map((server) => ({
-    params: {
-      id: server.id,
-    },
-  }));
-
   return {
-    paths,
-    fallback: false,
+    paths: [],
+    fallback: true,
   };
 };
