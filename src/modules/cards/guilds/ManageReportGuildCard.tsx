@@ -176,7 +176,7 @@ export default function ManageReportGuildCard({
                   <a
                     rel="noreferrer"
                     target={"_blank"}
-                    href={l}
+                    href={`https://discord.gg/${l}`}
                     key={l}
                     className="link"
                   >
