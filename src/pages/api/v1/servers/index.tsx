@@ -49,6 +49,9 @@ export default async function handler(
     take: 10,
     skip: req.query.cursor ? 1 : 0,
     cursor: req.query.cursor ? { id: req.query.cursor } : undefined,
+    orderBy: {
+      createdAt: "desc"
+    },
 
     where: {
       id: req.query.id || undefined,
