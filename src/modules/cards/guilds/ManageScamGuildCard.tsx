@@ -61,21 +61,29 @@ export default function ManageScamGuildCard({
       <BaseScamGuildCard
         server={server}
         extraProps={
-          <CardProperty name="Server Invites">
-            {server.inviteCodes.map((i) => (
-              <>
-                <a
-                  key={i}
-                  href={`https://discord.gg/${i}`}
-                  rel="noreferrer"
-                  target={"_blank"}
-                  className="link"
-                >
-                  {i}
-                </a>{" "}
-              </>
-            ))}
-          </CardProperty>
+          <>
+            <CardProperty name="Server Invites">
+              {server.inviteCodes.map((i) => (
+                <>
+                  <a
+                    key={i}
+                    href={`https://discord.gg/${i}`}
+                    rel="noreferrer"
+                    target={"_blank"}
+                    className="link"
+                  >
+                    {i}
+                  </a>
+                </>
+              ))}
+            </CardProperty>
+            <CardProperty name="Created By">
+              {server.createdByUser?.name}
+            </CardProperty>
+            <CardProperty name="Approved By">
+              {server.approvedBy?.user?.name}
+            </CardProperty>
+          </>
         }
       >
         <label htmlFor={`${server.id}-edit-modal`}>
