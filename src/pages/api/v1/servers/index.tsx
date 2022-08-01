@@ -38,6 +38,12 @@ export default async function handler(
       data: null,
     });
 
+  if (req.query.id && req.query.id?.length !== 24)
+    return res.status(400).json({
+      message: "ID must be 24 characters long",
+      data: null,
+    });
+
   await prisma.$connect();
   const query = await prisma.scamServer.findMany({
     take: 10,
