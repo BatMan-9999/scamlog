@@ -1,7 +1,6 @@
 import { ObjectServerTypeTranslation } from "@/modules/translation/enum/ServerType";
-import { ServerType } from "@prisma/client";
 
-export default function TypeSelect(setter: Function, value: string) {
+export default function TypeSelect({ setter, value }: TypeSelectProps) {
   const mapTranslation: [string, string][] = [];
 
   for (const key in ObjectServerTypeTranslation) {
@@ -11,7 +10,7 @@ export default function TypeSelect(setter: Function, value: string) {
   return (
     <select
       className="select select-bordered w-full max-w-xs"
-      onChange={(e) => setter(e.target.value as ServerType)}
+      onChange={(e) => setter(e.target.value)}
       value={value}
     >
       <option disabled>Select a type</option>
@@ -22,4 +21,9 @@ export default function TypeSelect(setter: Function, value: string) {
       ))}
     </select>
   );
+}
+
+export interface TypeSelectProps {
+  setter: Function;
+  value: string;
 }

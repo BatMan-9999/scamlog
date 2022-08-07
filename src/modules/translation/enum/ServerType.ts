@@ -6,7 +6,7 @@ enum ServerTypeTranslation {
   NSFW = "Not Safe for Work Scams",
   SPAM = "Mass DM/Ads or Spam Servers",
   LINKING = "Server which spam links to other servers",
-  ROBLOX = "Roblox-relate Scams",
+  ROBLOX = "Roblox-related Scams",
   SELLING = "Servers selling illegal/TOS-breaking items",
 
   OTHER = "Other",
