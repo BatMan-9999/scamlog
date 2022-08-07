@@ -61,13 +61,17 @@ export default function Reports() {
             <Search />
           </button>
         </div>
-        <CardGrid>
-          {data?.pages.map((page) =>
-            page.data.servers.map((report: GuildReportWithCreatedByUser) => (
-              <ManageReportGuildCard key={report.id} {...report} />
-            ))
-          )}
-        </CardGrid>
+        {data?.pages[0].data.servers.length ? (
+          <CardGrid>
+            {data?.pages.map((page) =>
+              page.data.servers.map((report: GuildReportWithCreatedByUser) => (
+                <ManageReportGuildCard key={report.id} {...report} />
+              ))
+            )}
+          </CardGrid>
+        ) : (
+          "No reports"
+        )}
       </div>
     </DrawerLayout>
   );
