@@ -247,6 +247,28 @@ export default function ManageReportGuildCard({
                   </div>
                   <List setter={setInviteCodes} value={inviteCodes} />
                 </div>
+                <div className="mt-4">
+                  <label className="label">
+                    <span className="label-text">Description of Scam</span>
+                  </label>
+                  <textarea
+                    className="textarea textarea-bordered h-24"
+                    placeholder="Write up a description..."
+                    value={longReport}
+                    onChange={(e) => setLongReport(e.target.value)}
+                  />
+                </div>
+                <div className="mt-4">
+                  <label className="label cursor-pointer">
+                    <span className="label-text">NSFW</span>
+                    <input
+                      type="checkbox"
+                      className="checkbox checkbox-primary"
+                      onChange={(e) => setNSFW(!nsfw)}
+                      checked={nsfw}
+                    />
+                  </label>
+                </div>
               </div>
             </FlexVertical>
           </FlexCenter>
@@ -260,6 +282,7 @@ export default function ManageReportGuildCard({
             setLongReport(guild.longReport ?? "");
             setCurrentInviteCode("");
             setInviteCodes(guild.inviteCodes);
+            setNSFW(guild.nsfw);
           }}
         >
           <label
