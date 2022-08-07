@@ -5,10 +5,11 @@ import { useQuery } from "react-query";
 import { APIInvite, GuildVerificationLevel } from "discord-api-types/v10";
 import Image from "next/image";
 import { Tooltip } from "@nextui-org/react";
-import { Prisma, ServerType } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { Plus } from "react-feather";
 import { toast } from "react-toastify";
 import verificationTooltips from "@/modules/translation/object/VerificationTooltips";
+import TypeSelect from "@/common/components/form/typeSelect";
 
 export default function Add() {
   const [invite, setInvite] = useState("");
@@ -114,19 +115,7 @@ export default function Add() {
             <label className="label">
               <span className="label-text">Scam Type</span>
             </label>
-            <select
-              className="select select-bordered w-full max-w-xs"
-              onChange={(e) => setServerType(e.target.value as ServerType)}
-              value={serverType}
-            >
-              <option value="QR">QR</option>
-              <option value="FAKENITRO">Fake Nitro</option>
-              <option value="OAUTH">OAuth/Forced Join</option>
-              <option value="VIRUS">Malware &amp; Viruses</option>
-              <option value="NSFW">Nudes &amp; NSFW Scams</option>
-              <option value="SPAM">Mass DMs, Spam &amp; Ads</option>
-              <option value="OTHER">Other...</option>
-            </select>
+            <TypeSelect setter={setServerType} value={serverType ?? "QR"} />
           </div>
           <div className="mt-4">
             <label className="label">

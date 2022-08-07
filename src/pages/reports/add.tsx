@@ -1,8 +1,9 @@
+import TypeSelect from "@/common/components/form/typeSelect";
 import useDebounce from "@/common/hooks/useDebounce";
 import urlRegex from "@/common/utilities/regex/url";
 import AuthenticatedOnly from "@/modules/auth/components/wrappers/AuthenticatedOnly";
 import ReportServersInviteCard from "@/modules/reports/components/ReportServersInviteCard";
-import { Prisma, ServerType } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { APIInvite, GuildVerificationLevel } from "discord-api-types/v10";
 import { useEffect, useState } from "react";
 import { Plus, X } from "react-feather";
@@ -110,22 +111,7 @@ export default function Report() {
                 </span>
               </label>
 
-              <select
-                className="select select-bordered w-full max-w-xs"
-                onChange={(e) => setServerType(e.target.value as ServerType)}
-                value={serverType}
-              >
-                <option selected disabled>
-                  Select a type
-                </option>
-                <option value="QR">QR</option>
-                <option value="FAKENITRO">Fake Nitro</option>
-                <option value="OAUTH">OAuth/Forced Join</option>
-                <option value="VIRUS">Malware &amp; Viruses</option>
-                <option value="NSFW">Nudes &amp; NSFW Scams</option>
-                <option value="SPAM">Mass DMs, Spam &amp; Ads</option>
-                <option value="OTHER">Other...</option>
-              </select>
+              <TypeSelect setter={setServerType} value={serverType ?? "QR"} />
             </div>
           </div>
 
@@ -319,7 +305,8 @@ export default function Report() {
                       type: "error",
                     });
 
-                    if(response.status === 404) return toast("Server not found", {type: "error"})
+                  if (response.status === 404)
+                    return toast("Server not found", { type: "error" });
                   // Cleanup form
                   setAdminIds([]);
                   setEvidenceLinks([]);
