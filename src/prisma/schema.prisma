@@ -31,7 +31,7 @@ model ScamServer {
   // Use ts enum
   // https://discord.com/developers/docs/resources/guild#guild-object-verification-level
   verificationLevel Int
-  serverType        ServerType @default(OTHER)
+  serverType        String @default("OTHER")
   description       String?
   longReport        String? // markdown
   tags              String[]
@@ -59,7 +59,7 @@ model ServerReport {
   // Use ts enum
   // https://discord.com/developers/docs/resources/guild#guild-object-verification-level
   verificationLevel Int
-  serverType        ServerType @default(OTHER)
+  serverType        String @default("OTHER")
   description       String?
   longReport        String? // markdown
   tags              String[]
@@ -197,15 +197,4 @@ enum UserPermissions {
   MODERATE_MEMBERS // Ban & unban users
   ADMIN // Add other admins and manage user permissions
   ROOT // Has all permissions
-}
-
-enum ServerType {
-  QR // Standard QR code token loggers
-  FAKENITRO // Fake nitro
-  OAUTH // OAuth2 scams, such as force joins
-  VIRUS // Servers which distribute RATs & viruses. Prefer NSFW
-  NSFW // NSFW, nudes, etc.
-  SPAM // Mass advertising or spam servers
-
-  OTHER // Catchall
 }
