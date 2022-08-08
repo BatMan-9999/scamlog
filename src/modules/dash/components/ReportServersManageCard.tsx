@@ -181,7 +181,7 @@ export default function ReportServerManageCard({
           <div>
             <span className="block text-primary">Scam Type</span>
             <span className="capitalize">
-              {ServerTypeTranslation[serverType]}
+              {(ServerTypeTranslation as any)[serverType]}
             </span>
           </div>
           <div>

@@ -189,7 +189,7 @@ export default function ManageReportGuildCard({
             )}
           </CardProperty>
           <CardProperty name="Scam Type">
-            <span>{ServerTypeTranslation[guild.serverType]}</span>
+            <span>{(ServerTypeTranslation as any)[guild.serverType]}</span>
           </CardProperty>
         </CardPropertiesGrid>
       </BaseGuildCard>

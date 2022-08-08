@@ -1,9 +1,10 @@
 import FlexCenter from "@/common/components/base/flex/FlexCenter";
 import FlexVertical from "@/common/components/base/flex/FlexVertical";
+import TypeSelect from "@/common/components/form/typeSelect";
 import { ScamServerWithCreatedByUserAndApprovedBy } from "@/common/types/prisma/ScamServer";
 import BaseModal from "@/modules/modals/base/BaseModal";
 import BaseModalActions from "@/modules/modals/base/BaseModalAction";
-import { Prisma, ServerType } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { useState } from "react";
 import { Edit, Plus, Save, Trash2, X } from "react-feather";
 import { useMutation, useQueryClient } from "react-query";
@@ -16,7 +17,7 @@ export default function ManageScamGuildCard({
   ...server
 }: ScamServerWithCreatedByUserAndApprovedBy) {
   // React State
-  const [serverType, setServerType] = useState<ServerType>(server.serverType);
+  const [serverType, setServerType] = useState<string>(server.serverType);
   const [longReport, setLongReport] = useState(server.longReport);
   const [inviteCodes, setInviteCodes] = useState(server.inviteCodes);
   const [currentInviteCode, setCurrentInviteCode] = useState("");
@@ -147,20 +148,7 @@ export default function ManageScamGuildCard({
                 </span>
               </label>
 
-              <select
-                className="select select-bordered w-full max-w-xs"
-                onChange={(e) => setServerType(e.target.value as ServerType)}
-                value={serverType}
-              >
-                <option disabled>Select a type</option>
-                <option value="QR">QR</option>
-                <option value="FAKENITRO">Fake Nitro</option>
-                <option value="OAUTH">OAuth/Forced Join</option>
-                <option value="VIRUS">Malware &amp; Viruses</option>
-                <option value="NSFW">Nudes &amp; NSFW Scams</option>
-                <option value="SPAM">Mass DMs, Spam &amp; Ads</option>
-                <option value="OTHER">Other...</option>
-              </select>
+              <TypeSelect setter={setServerType} value={serverType} />
             </div>
 
             <div>

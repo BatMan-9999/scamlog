@@ -26,4 +26,4 @@ export const ObjectServerTypeTranslation = {
   OTHER: ServerTypeTranslation.OTHER,
 };
 
-export default ServerTypeTranslation;
+export default ServerTypeTranslation as any;
