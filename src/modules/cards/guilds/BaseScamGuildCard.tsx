@@ -25,6 +25,7 @@ export default function BaseScamServerCard({
     description,
     nsfw,
     id,
+    inviteCodes,
   },
   children,
   extraProps,
@@ -88,6 +89,9 @@ export default function BaseScamServerCard({
           tooltip="The internal ID used in the database"
         >
           <span className="break-words">{id}</span>
+        </CardProperty>
+        <CardProperty name="Active Server Invites">
+          <span>{inviteCodes.length}</span>
         </CardProperty>
         {extraProps ?? null}
       </CardPropertiesGrid>
