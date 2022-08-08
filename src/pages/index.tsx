@@ -7,21 +7,16 @@ import FlexGrid from "@/common/components/base/flex/FlexGrid";
 import InfiniteScroll from "react-infinite-scroller";
 import useDebounce from "@/common/hooks/useDebounce";
 
-/**
- * How this page works:
- *
- * Fetch the first page of scam servers from the database, and display them statically
- * When the user clicks Load More, begin using the API to load them
- */
-
 export default function Index() {
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 500);
 
   const fetchScamServer = ({ pageParam }: { pageParam?: string }) =>
-    fetch(`/api/v1/servers${pageParam ? `?cursor=${pageParam}&` : "?"}name=${search}`).then(
-      (res) => res.json()
-    );
+    fetch(
+      `/api/v1/servers${
+        pageParam ? `?cursor=${pageParam}&` : "?"
+      }name=${search}`
+    ).then((res) => res.json());
 
   const { data, fetchNextPage, hasNextPage, status } = useInfiniteQuery(
     ["scamservers", debouncedSearch],
@@ -51,9 +46,11 @@ export default function Index() {
         <FlexCenter>
           <FlexGrid>
             {data?.pages.map((page) =>
-              page?.data?.servers?.map?.((server: ScamServer) => (
-                <ViewReportScamGuildCard key={server.id} {...server} />
-              ))
+              page?.data?.servers
+                ?.filter((s: ScamServer) => s.isActive)
+                ?.map?.((server: ScamServer) => (
+                  <ViewReportScamGuildCard key={server.id} {...server} />
+                ))
             )}
           </FlexGrid>
         </FlexCenter>

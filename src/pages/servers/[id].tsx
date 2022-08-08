@@ -33,7 +33,16 @@ export default function ID({
       <div className="flex justify-center flex-col items-center md:row-span-2">
         <ScamServerCardReport {...data} />
       </div>
+
       <div className="md:col-span-1 lg:col-span-2">
+        {!data.isActive ? (
+          <div className="alert alert-warning shadow-lg mb-8">
+            <div>
+              <span>Server is inactive or has been deleted</span>
+            </div>
+          </div>
+        ) : null}
+
         <div className="prose lg:prose-xl">
           <h2>Long Report</h2>
           <MDXRemote {...text} />
