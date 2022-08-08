@@ -81,7 +81,7 @@ export default function BaseScamServerCard({
           name="Scam Type"
           tooltip="The type of scam this server is operating"
         >
-          <span>{ServerTypeTranslation[serverType]}</span>
+          <span>{(ServerTypeTranslation as any)[serverType] as any}</span>
         </CardProperty>
         <CardProperty
           name="Database ID"
