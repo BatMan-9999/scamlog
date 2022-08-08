@@ -17,9 +17,11 @@
     "@tailwindcss/typography": "^0.5.4",
     "daisyui": "^2.19.0",
     "discord-api-types": "^0.36.1",
+    "get-pixels": "^3.3.3",
     "next": "12.2.2",
     "next-auth": "^4.9.0",
     "next-mdx-remote": "^4.0.3",
+    "quantize": "^1.0.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-feather": "^2.0.10",
@@ -31,6 +33,7 @@
     "zod": "^3.17.10"
   },
   "devDependencies": {
+    "@types/get-pixels": "^3.3.2",
     "@types/node": "^18.0.3",
     "@types/react": "18.0.15",
     "@types/react-dom": "18.0.6",

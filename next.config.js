@@ -3,11 +3,9 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: [
-      "cdn.discordapp.com"
-    ]
-  }
-}
+    domains: ["cdn.discordapp.com", "singlecolorimage.com"],
+  },
+};
 
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",

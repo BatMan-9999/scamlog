@@ -28,9 +28,10 @@ export default function BaseUserCard({
             height={170}
           />
         ) : (
-          // bannerHash is undefined:
+          // bannerHash is undefined: get colortheif colour
+          // TODO: get color thief colour
           <Image
-            src={`/static/img/missingno.png`}
+            src={`https://singlecolorimage.com/get/000000/500x170`}
             alt="Missing user banner"
             layout="fixed"
             width={500}
