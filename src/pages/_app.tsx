@@ -9,7 +9,7 @@ import { ToastContainer } from "react-toastify";
 import dynamic from "next/dynamic";
 
 // Dynamic Imports
-const HeadTags = dynamic(() => import("@/common/components/base/HeadTags"))
+const HeadTags = dynamic(() => import("@/common/components/base/HeadTags"));
 const NavBar = dynamic(() => import("@/common/components/nav/NavBar"));
 
 const client = new QueryClient();
@@ -38,9 +38,13 @@ function ScamLog({
                   url: "/reports/add",
                 },
                 {
+                  name: "Check Invite",
+                  url: "/check",
+                },
+                {
                   name: "Partners",
-                  url: "/partners"
-                }
+                  url: "/partners",
+                },
               ]}
             />
             <Component {...pageProps} />
