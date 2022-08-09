@@ -39,6 +39,8 @@ export default async function handler(
       data: null,
     });
 
+  console.log(ObjectServerTypeTranslation);
+
   if (!Object.keys(ObjectServerTypeTranslation).includes(req.body.serverType))
     return res.status(400).json({
       message: `serverType must be one of the following: ${Object.keys(
