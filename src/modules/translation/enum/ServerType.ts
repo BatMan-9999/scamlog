@@ -8,6 +8,7 @@ enum ServerTypeTranslation {
   LINKING = "Server which spam links to other servers",
   ROBLOX = "Roblox-related Scams",
   SELLING = "Servers selling illegal/TOS-breaking items",
+  SUSPICIOUS_OAUTH = "Suspicious Backup Bots/Potential OAuth abuse",
 
   OTHER = "Other",
 }
@@ -22,6 +23,7 @@ export const ObjectServerTypeTranslation = {
   LINKING: ServerTypeTranslation.LINKING,
   ROBLOX: ServerTypeTranslation.ROBLOX,
   SELLING: ServerTypeTranslation.SELLING,
+  SUSPICIOUS_OAUTH: ServerTypeTranslation.SUSPICIOUS_OAUTH,
 
   OTHER: ServerTypeTranslation.OTHER,
 };
