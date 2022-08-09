@@ -5,6 +5,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { unstable_getServerSession } from "next-auth";
 import { opts } from "../../auth/[...nextauth]";
 import { prisma } from "@/common/utilities/prisma";
+import { ObjectServerTypeTranslation } from "@/modules/translation/enum/ServerType";
 
 export default async function handler(
   req: NextApiRequest,
@@ -87,17 +88,13 @@ export default async function handler(
       data: null,
     });
 
-  if (
-    !["QR", "FAKENITRO", "OAUTH", "VIRUS", "NSFW", "SPAM", "OTHER"].includes(
-      req.body.serverType
-    )
-  )
+  if (!Object.keys(ObjectServerTypeTranslation).includes(req.body.serverType))
     return res.status(400).json({
-      message:
-        "serverType must be one of the following: QR, FAKENITRO, OAUTH, VIRUS, NSFW, SPAM, OTHER",
+      message: `serverType must be one of the following: ${Object.keys(
+        ObjectServerTypeTranslation
+      ).join(", ")}`,
       data: null,
     });
-  await prisma?.$connect();
 
   const dupe = await prisma.scamServer.findFirst({
     where: {

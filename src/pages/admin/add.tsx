@@ -17,7 +17,7 @@ export default function Add() {
   const [adminIds, setAdminIds] = useState<string[]>([]);
   const [currentAdminId, setCurrentAdminId] = useState("");
   const [serverType, setServerType] =
-    useState<Prisma.ScamServerCreateInput["serverType"]>("QR");
+    useState("QR");
   const [nsfw, setNSFW] = useState(false);
   const [isDuplicated, setIsDuplicated] = useState(false);
   const debouncedInvite = useDebounce(invite, 800);
@@ -157,7 +157,7 @@ export default function Add() {
                     description: query.data?.guild?.description,
                     inviteCodes: [query.data!.code!],
                     longReport: longReport,
-                    serverType: serverType,
+                    serverType,
                     nsfw,
                     iconHash: query.data?.guild?.icon,
                   };
